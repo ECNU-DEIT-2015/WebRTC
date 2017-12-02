@@ -1,0 +1,16 @@
+{
+    "name": "jabriel",
+    "version": "0.1.0",
+    "devDependencies": {
+        "grunt": "~0.4.0",
+        "grunt-contrib-clean": "~0.6.0",
+        "grunt-contrib-uglify": "~0.1.2",
+        "grunt-contrib-concat": "~0.1.1"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.15.2",
+        "save": "^2.3.1",
+        "socket.io": "^2.0.4"
+    }
+}
