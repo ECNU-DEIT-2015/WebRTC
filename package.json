@@ -8,9 +8,9 @@
         "grunt-contrib-concat": "latest"
     },
     "dependencies": {
-        "body-parser": "latest",
-        "express": "latest",
-        "save": "latest",
-        "socket.io": "latest"
+        "body-parser": "^1.18.2",
+        "express": "^4.15.2",
+        "save": "^2.3.1",
+        "socket.io": "^2.0.4"
     }
 }

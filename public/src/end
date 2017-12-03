@@ -1,0 +1,2 @@
+window.DrawBoard = DrawBoard;
+})(window, jQuery, html2canvas);
