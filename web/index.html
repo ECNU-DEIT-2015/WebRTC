@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>canvas</title>
+    <style type="text/css">
+        body{height:100%;}
+        a:link, a:visited{color:#333;text-decoration:none;}
+        .con1,.con2{position:relative;border:#ccc solid 1px;width:400px;height:400px;float:left;margin-right:5px;}
+        .con1{width:990px;height:500px;}
+        .handler1, .handler2{width:40px;height:400px;border:#ccc solid 1px;float:left;margin-right:25px;}
+        .handler1 a, .handler2 a{border-bottom:#ccc solid 1px;height:30px;line-height:30px;font-size:12px;display: block;text-align:center;}
+        .handler1 a.active, .handler2 a.active{background:#ddd;}
+        input{width:30px;}
+        .handler1 span, .handler2 span{width:10px;height:10px;margin:1px;display:block;border:#fff solid 1px;}
+        .handler1 span.active, .handler2 span.active{width:10px;height:10px;margin:1px;display:block;border-color:red;}
+    </style>
+    
+</head>
+<body style="">
+<div class="con1">
+
+</div>
+<div class="handler1">
+    <a class="rect" href="javascript:;">矩形</a>
+    <a class="round" href="javascript:;">圆形</a>
+    <a class="line" href="javascript:;">直线</a>
+    <a class="curve" href="javascript:;">曲线</a>
+    <a class="arrow" href="javascript:;">箭头</a>
+    <a class="ease" href="javascript:;">橡皮</a>
+    <a class="back" href="javascript:;">后退</a>
+    <a class="forward" href="javascript:;">前进</a>
+    <a class="clear" href="javascript:;">清除</a>
+    <a class="save" href="javascript:;">保存</a>
+    <input class="lineWidth" value="1" autocomplete="off" />
+    <span style="background: red;"></span>
+    <span style="background: green;"></span>
+    <span style="background: blue;"></span>
+    <span style="background: #000;"></span>
+</div>
+
+
+<div class="con2" hidden="true">
+
+</div>
+<div class="handler2" hidden="true">
+    <a class="rect" href="javascript:;">矩形</a>
+    <a class="round" href="javascript:;">圆形</a>
+    <a class="line" href="javascript:;">直线</a>
+    <a class="curve" href="javascript:;">曲线</a>
+    <a class="ease" href="javascript:;">橡皮</a>
+</div>
+
+<div id="videos">
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+</div>
+
+<script src="../lab/jquery.js"></script>
+<script src="../lab/excanvas.js"></script>
+<script src="../lab/html2canvas.js"></script>
+<script src="../build/draw-board.min.js"></script>
+
+<script>
+    var panel = new DrawBoard({
+        width: $('.con1').width(),
+        height: $('.con1').height(),
+        parent: '.con1',
+        type: 'arrow',
+        lineWidth: $('.handler1 .lineWidth').val(),
+        color: 'red'
+    });
+    var panel2 = new DrawBoard({
+        width: $('.con2').width(),
+        height: $('.con2').height(),
+        parent: '.con2',
+        type: 'rect',
+        color: 'red'
+    });
+    $('.handler1 a:not(.back,.forward), .handler2 a').click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.handler1 a.rect').click(function () { panel.type = 'rect'; });
+    $('.handler1 a.round').click(function () { panel.type = 'round'; });
+    $('.handler1 a.line').click(function () { panel.type = 'line'; });
+    $('.handler1 a.curve').click(function () { panel.type = 'curve'; });
+    $('.handler1 a.arrow').click(function () { panel.type = 'arrow'; });
+    $('.handler1 a.ease').click(function () { panel.type = 'ease'; });
+    $('.handler1 a.back').click(function () { panel.back(); });
+    $('.handler1 a.forward').click(function () { panel.forward(); });
+    $('.handler1 .lineWidth').change(function () { panel.setLineWidth($(this).val()); });
+    $('.handler1 span').click(function () {
+        panel.setColor($(this).css('background-color'));
+        $(this).addClass('active').siblings('span').removeClass('active');
+    });
+    $('.handler1 .clear').click(function() {
+        panel.clear();
+    });
+    $('.handler1 .save').click(function() {
+        panel.save();
+    });
+
+    $('.handler2 a.rect').click(function () { panel2.type = 'rect'; });
+    $('.handler2 a.round').click(function () { panel2.type = 'round'; });
+    $('.handler2 a.line').click(function () { panel2.type = 'line'; });
+    $('.handler2 a.curve').click(function () { panel2.type = 'curve'; });
+    $('.handler2 a.ease').click(function () { panel2.type = 'ease'; });
+</script>
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/lib/adapter.js"></script>
+<!-- <script src="js/main.js"></script> -->
+<script src="../js/myMain.js"></script>
+
+<!-- <script src="../js/main.js"></script> -->
+<!-- <script>
+    
+    console.log("mymain.js");
+    var canvas = document.getElementsByTagName('canvas')[0];
+    canvas.id = "main_canvas";
+    var ctx = canvas.getContext('2d');
+    var canvas_imagedata = ctx.getImageData(0,0,990,500);
+
+    var array_data = new Uint8ClampedArray(canvas_imagedata.data);
+
+    var socket = io();
+
+    socket.on("toserver", function(msg){
+        console.log(msg);
+    });
+    if(window.Worker){
+        var myWorker = new Worker("worker.js");
+        window.setInterval(function(){
+            var lasted_array = document.getElementById("main_canvas").getContext("2d").getImageData(0,0,990,500).data;
+            myWorker.postMessage([array_data, lasted_array]);
+        },200);
+
+        myWorker.onmessage = function(e){
+            if(e.data["isChanged"] == true){
+                array_data = document.getElementById("main_canvas").getContext("2d").getImageData(0,0,990,500).data;
+                array_data = new Uint8ClampedArray(array_data);
+                socket.emit('toserver', JSON.stringify({'id':1,'data': e.data["changed_data"]}))
+            }else{
+                console.log("not changed");
+            }
+        }
+    }
+   
+</script> -->
+</body>
+</html>
