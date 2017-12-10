@@ -6730,12 +6730,12 @@
     "^": ""
   }], ["dart.dom.web_sql", "dart:web_sql",, P, {
     "^": ""
-  }], ["", "profile.dart",, U, {
+  }], ["", "navigator.dart",, K, {
     "^": "",
     main: [function() {
       var div = document.querySelector("#navigator_div");
-      W.HttpRequest_getString("navigator.html", null, null).then$1(new U.main_closure(div));
-    }, "call$0", "profile__main$closure", 0, 0, 1],
+      W.HttpRequest_getString("navigator.html", null, null).then$1(new K.main_closure(div));
+    }, "call$0", "navigator__main$closure", 0, 0, 1],
     main_closure: {
       "^": "Closure:2;div",
       call$1: function(template) {
@@ -7199,14 +7199,14 @@
     init.currentScript = currentScript;
     if (typeof dartMainRunner === "function")
       dartMainRunner(function(a) {
-        H.startRootIsolate(U.profile__main$closure(), a);
+        H.startRootIsolate(K.navigator__main$closure(), a);
       }, []);
     else
       (function(a) {
-        H.startRootIsolate(U.profile__main$closure(), a);
+        H.startRootIsolate(K.navigator__main$closure(), a);
       })([]);
   });
   // END invoke [main].
 })();
 
-//# sourceMappingURL=profile.dart.js.map
+//# sourceMappingURL=navigator.dart.js.map
