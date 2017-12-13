@@ -17,20 +17,31 @@ void main(){
     document.getElementById("navigator_div").hidden = false;
   });
 
-
+  document.getElementById("fullscreen").onClick.listen((even){
+    recover_all();
+  });
+  
+  document.getElementById("mute-video").onClick.listen((even){
+    hidden_or_unhidden_local_video();
+  });
 }
 
 void recover_all(parent){
-  if(parent.childNodes.length == 1){
-    print(parent.hidden);
-    parent.hidden = false;
-    return;
-  }else{
-    var children = parent.childNodes;
-    for(var i=0; i<children.length; i++){
-      recover_all(children[i]);
-    }
-  }
+    document.getElementById("draw_panel").hidden = false;
+    document.getElementById("navigator_div").hidden = false;
+    
+    document.getElementById("remoteVideo").style.position = "static";
+    document.getElementById("localVideo").style.position = "static";
+    
+    document.getElementById("remoteVideo").style.width = "300px";
+    document.getElementById("remoteVideo").style.height = "200px";
+    document.getElementById("remoteVideo").style.zIndex = "auto";
+   
+    document.getElementById("localVideo").style.width = "300px";
+    document.getElementById("localVideo").style.height = "200px";
+  
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+   
 }
 
 void only_video(){
@@ -97,3 +108,8 @@ void mini_video(){
     // document.getElementById("localVideo").style.width = mini_video_width.toString()+"px";
     // document.getElementById("localVideo").style.height = mini_video_height.toString()+"px";
 }
+
+void hidden_or_unhidden_local_video(){
+  document.getElementById("localVideo").hidden = !document.getElementById("localVideo").hidden;
+}
+
