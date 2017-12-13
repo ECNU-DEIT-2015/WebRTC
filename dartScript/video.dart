@@ -17,13 +17,13 @@ void main(){
     document.getElementById("navigator_div").hidden = false;
   });
 
-  document.getElementById("fullscreen").onClick.listen((even){
-    recover_all();
-  });
+  // document.getElementById("fullscreen").onClick.listen((even){
+  //   recover_all();
+  // });
   
-  document.getElementById("mute-video").onClick.listen((even){
-    hidden_or_unhidden_local_video();
-  });
+  // document.getElementById("mute-video_").onClick.listen((even){
+  //   hidden_or_unhidden_local_video();
+  // });
 }
 
 void recover_all(){
