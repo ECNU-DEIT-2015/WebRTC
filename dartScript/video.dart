@@ -1,4 +1,5 @@
 import "dart:html";
+import 'package:js/js.dart' as js;
 
 void main(){
   var video_button = querySelector("#only_video");
@@ -17,17 +18,24 @@ void main(){
     document.getElementById("navigator_div").hidden = false;
   });
 
-  // document.getElementById("fullscreen").onClick.listen((even){
-  //   recover_all();
-  // });
+  document.getElementById("quit").onClick.listen((even){
+    recover_all();
+  });
   
-  // document.getElementById("mute-video_").onClick.listen((even){
+  document.getElementById("hidden_local_video").onClick.listen((even){
+    hidden_or_unhidden_local_video();
+  });
+  
+  // document.getElementById("mute_video").onClick.listen((even){
   //   hidden_or_unhidden_local_video();
   // });
 }
 
 void recover_all(){
     print("recover");
+    
+    js.context.callMethod(r'$', ['#icons']).callMethod('fadeToggle', [new js.JsObject.jsify({'speed': 'slow'})]);
+
     document.getElementById("draw_panel").hidden = false;
     document.getElementById("navigator_div").hidden = false;
     

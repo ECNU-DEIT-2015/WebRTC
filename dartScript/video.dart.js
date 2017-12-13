@@ -649,6 +649,19 @@
       map$1: function(receiver, f) {
         return new H.MappedListIterable(receiver, f, [H.getTypeArgumentByIndex(receiver, 0), null]);
       },
+      join$1: function(receiver, separator) {
+        var t1, list, i, t2;
+        t1 = receiver.length;
+        list = new Array(t1);
+        list.fixed$length = Array;
+        for (i = 0; i < receiver.length; ++i) {
+          t2 = H.S(receiver[i]);
+          if (i >= t1)
+            return H.ioore(list, i);
+          list[i] = t2;
+        }
+        return list.join(separator);
+      },
       elementAt$1: function(receiver, index) {
         if (index < 0 || index >= receiver.length)
           return H.ioore(receiver, index);
@@ -877,6 +890,30 @@
       get$iterator: function(_) {
         return new H.ListIterator(this, this.get$length(this), 0, null);
       },
+      join$1: function(_, separator) {
+        var $length, first, t1, i;
+        $length = this.get$length(this);
+        if (separator.length !== 0) {
+          if ($length === 0)
+            return "";
+          first = H.S(this.elementAt$1(0, 0));
+          if ($length !== this.get$length(this))
+            throw H.wrapException(new P.ConcurrentModificationError(this));
+          for (t1 = first, i = 1; i < $length; ++i) {
+            t1 = t1 + separator + H.S(this.elementAt$1(0, i));
+            if ($length !== this.get$length(this))
+              throw H.wrapException(new P.ConcurrentModificationError(this));
+          }
+          return t1.charCodeAt(0) == 0 ? t1 : t1;
+        } else {
+          for (i = 0, t1 = ""; i < $length; ++i) {
+            t1 += H.S(this.elementAt$1(0, i));
+            if ($length !== this.get$length(this))
+              throw H.wrapException(new P.ConcurrentModificationError(this));
+          }
+          return t1.charCodeAt(0) == 0 ? t1 : t1;
+        }
+      },
       map$1: function(_, f) {
         return new H.MappedListIterable(this, f, [H.getRuntimeTypeArgument(this, "ListIterable", 0), null]);
       },
@@ -979,6 +1016,29 @@
     },
     FixedLengthListMixin: {
       "^": "Object;$ti"
+    },
+    Symbol: {
+      "^": "Object;__internal$_name<",
+      $eq: function(_, other) {
+        if (other == null)
+          return false;
+        return other instanceof H.Symbol && J.$eq$(this.__internal$_name, other.__internal$_name);
+      },
+      get$hashCode: function(_) {
+        var hash, t1;
+        hash = this._hashCode;
+        if (hash != null)
+          return hash;
+        t1 = J.get$hashCode$(this.__internal$_name);
+        if (typeof t1 !== "number")
+          return H.iae(t1);
+        hash = 536870911 & 664597 * t1;
+        this._hashCode = hash;
+        return hash;
+      },
+      toString$0: function(_) {
+        return 'Symbol("' + H.S(this.__internal$_name) + '")';
+      }
     }
   }], ["_isolate_helper", "dart:_isolate_helper",, H, {
     "^": "",
@@ -2130,6 +2190,9 @@
     throwExpression: function(ex) {
       throw H.wrapException(ex);
     },
+    throwRuntimeError: function(message) {
+      throw H.wrapException(new H.RuntimeError(message));
+    },
     throwConcurrentModificationError: function(collection) {
       throw H.wrapException(new P.ConcurrentModificationError(collection));
     },
@@ -2533,6 +2596,9 @@
         return false;
       functionTypeObject = H.extractFunctionTypeObjectFrom(value);
       return functionTypeObject == null ? false : H.isFunctionSubtype(functionTypeObject, functionTypeRti);
+    },
+    throwNoSuchMethod: function(obj, $name, $arguments, expectedArgumentNames) {
+      throw H.wrapException(new P.NoSuchMethodError(obj, new H.Symbol($name), $arguments, H.JsLinkedHashMap_JsLinkedHashMap$es6(P.Symbol0, null), expectedArgumentNames));
     },
     throwCyclicInit: function(staticName) {
       throw H.wrapException(new P.CyclicInitializationError(staticName));
@@ -3414,7 +3480,12 @@
         this._deleteTableEntry$2(table, "<non-identifier-key>");
         return table;
       },
-      $isInternalMap: 1
+      $isInternalMap: 1,
+      static: {
+        JsLinkedHashMap_JsLinkedHashMap$es6: function($K, $V) {
+          return new H.JsLinkedHashMap(0, null, null, null, null, null, 0, [$K, $V]);
+        }
+      }
     },
     JsLinkedHashMap_values_closure: {
       "^": "Closure:2;$this",
@@ -3853,6 +3924,13 @@
       }
       currentZone.toString;
       P._rootScheduleMicrotask(null, null, currentZone, currentZone.bindCallback$2$runGuarded(callback, true));
+    },
+    _cancelAndError: function(subscription, future, error, stackTrace) {
+      var cancelFuture = subscription.cancel$0();
+      if (!!J.getInterceptor(cancelFuture).$isFuture && cancelFuture !== $.$get$Future__nullFuture())
+        cancelFuture.whenComplete$1(new P._cancelAndError_closure(future, error, stackTrace));
+      else
+        future._completeError$2(error, stackTrace);
     },
     _addErrorWithReplacement: function(sink, error, stackTrace) {
       $.Zone__current.toString;
@@ -4382,6 +4460,16 @@
       map$1: function(_, convert) {
         return new P._MapStream(convert, this, [H.getRuntimeTypeArgument(this, "Stream", 0), null]);
       },
+      join$1: function(_, separator) {
+        var t1, result, buffer;
+        t1 = {};
+        result = new P._Future(0, $.Zone__current, null, [P.String]);
+        buffer = new P.StringBuffer("");
+        t1.subscription = null;
+        t1.first = true;
+        t1.subscription = this.listen$4$cancelOnError$onDone$onError(new P.Stream_join_closure(t1, this, separator, result, buffer), true, new P.Stream_join_closure0(result, buffer), new P.Stream_join_closure1(result));
+        return result;
+      },
       get$length: function(_) {
         var t1, future;
         t1 = {};
@@ -4397,6 +4485,43 @@
         future = new P._Future(0, $.Zone__current, null, [[P.List, t1]]);
         this.listen$4$cancelOnError$onDone$onError(new P.Stream_toList_closure(this, result), true, new P.Stream_toList_closure0(result, future), future.get$_completeError());
         return future;
+      }
+    },
+    Stream_join_closure: {
+      "^": "Closure;_box_0,$this,separator,result,buffer",
+      call$1: function(element) {
+        var e, s, t1, exception;
+        t1 = this._box_0;
+        if (!t1.first)
+          this.buffer._contents += this.separator;
+        t1.first = false;
+        try {
+          this.buffer._contents += H.S(element);
+        } catch (exception) {
+          e = H.unwrapException(exception);
+          s = H.getTraceFromException(exception);
+          t1 = t1.subscription;
+          $.Zone__current.toString;
+          P._cancelAndError(t1, this.result, e, s);
+        }
+      },
+      $signature: function() {
+        return H.computeSignature(function(T) {
+          return {func: 1, args: [T]};
+        }, this.$this, "Stream");
+      }
+    },
+    Stream_join_closure1: {
+      "^": "Closure:2;result",
+      call$1: function(e) {
+        this.result._completeError$1(e);
+      }
+    },
+    Stream_join_closure0: {
+      "^": "Closure:0;result,buffer",
+      call$0: function() {
+        var t1 = this.buffer._contents;
+        this.result._complete$1(t1.charCodeAt(0) == 0 ? t1 : t1);
       }
     },
     Stream_length_closure: {
@@ -4740,6 +4865,12 @@
           t1.set$next($event);
           this.lastPendingEvent = $event;
         }
+      }
+    },
+    _cancelAndError_closure: {
+      "^": "Closure:0;future,error,stackTrace",
+      call$0: function() {
+        return this.future._completeError$2(this.error, this.stackTrace);
       }
     },
     _ForwardingStream: {
@@ -5383,6 +5514,13 @@
       elementAt$1: function(receiver, index) {
         return this.$index(receiver, index);
       },
+      join$1: function(receiver, separator) {
+        var t1;
+        if (this.get$length(receiver) === 0)
+          return "";
+        t1 = P.StringBuffer__writeAll("", receiver, separator);
+        return t1.charCodeAt(0) == 0 ? t1 : t1;
+      },
       map$1: function(receiver, f) {
         return new H.MappedListIterable(receiver, f, [H.getRuntimeTypeArgument(receiver, "ListMixin", 0), null]);
       },
@@ -5538,6 +5676,24 @@
       toString$0: function(_) {
         return P.IterableBase_iterableToFullString(this, "{", "}");
       },
+      join$1: function(_, separator) {
+        var iterator, t1;
+        iterator = new P._LinkedHashSetIterator(this, this._collection$_modifications, null, null);
+        iterator._collection$_cell = this._collection$_first;
+        if (!iterator.moveNext$0())
+          return "";
+        if (separator === "") {
+          t1 = "";
+          do
+            t1 += H.S(iterator._collection$_current);
+          while (iterator.moveNext$0());
+        } else {
+          t1 = H.S(iterator._collection$_current);
+          for (; iterator.moveNext$0();)
+            t1 = t1 + separator + H.S(iterator._collection$_current);
+        }
+        return t1.charCodeAt(0) == 0 ? t1 : t1;
+      },
       $isEfficientLengthIterable: 1,
       $asEfficientLengthIterable: null
     },
@@ -5571,6 +5727,19 @@
     },
     print: function(object) {
       H.printString(H.S(object));
+    },
+    NoSuchMethodError_toString_closure: {
+      "^": "Closure:12;_box_0,sb",
+      call$2: function(key, value) {
+        var t1, t2, t3;
+        t1 = this.sb;
+        t2 = this._box_0;
+        t1._contents += t2.comma;
+        t3 = t1._contents += H.S(key.get$__internal$_name());
+        t1._contents = t3 + ": ";
+        t1._contents += H.S(P.Error_safeToString(value));
+        t2.comma = ", ";
+      }
     },
     bool: {
       "^": "Object;",
@@ -5740,6 +5909,34 @@
         }
       }
     },
+    NoSuchMethodError: {
+      "^": "Error;_core$_receiver,_memberName,_core$_arguments,_namedArguments,_existingArgumentNames",
+      toString$0: function(_) {
+        var _box_0, sb, t1, argument, memberName, receiverText, actualParameters, formalParameters;
+        _box_0 = {};
+        sb = new P.StringBuffer("");
+        _box_0.comma = "";
+        t1 = this._core$_arguments;
+        if (t1 != null)
+          for (t1 = J.get$iterator$ax(t1); t1.moveNext$0();) {
+            argument = t1.get$current();
+            sb._contents += _box_0.comma;
+            sb._contents += H.S(P.Error_safeToString(argument));
+            _box_0.comma = ", ";
+          }
+        this._namedArguments.forEach$1(0, new P.NoSuchMethodError_toString_closure(_box_0, sb));
+        memberName = this._memberName.__internal$_name;
+        receiverText = P.Error_safeToString(this._core$_receiver);
+        actualParameters = sb.toString$0(0);
+        t1 = this._existingArgumentNames;
+        if (t1 == null)
+          return "NoSuchMethodError: method not found: '" + H.S(memberName) + "'\nReceiver: " + H.S(receiverText) + "\nArguments: [" + actualParameters + "]";
+        else {
+          formalParameters = J.join$1$ax(t1, ", ");
+          return "NoSuchMethodError: incorrect number of arguments passed to method named '" + H.S(memberName) + "'\nReceiver: " + H.S(receiverText) + "\nTried calling: " + H.S(memberName) + "(" + actualParameters + ")\nFound: " + H.S(memberName) + "(" + H.S(formalParameters) + ")";
+        }
+      }
+    },
     UnsupportedError: {
       "^": "Error;message",
       toString$0: function(_) {
@@ -5833,6 +6030,23 @@
       "^": "Object;$ti",
       map$1: function(_, f) {
         return H.MappedIterable_MappedIterable(this, f, H.getRuntimeTypeArgument(this, "Iterable", 0), null);
+      },
+      join$1: function(_, separator) {
+        var iterator, t1;
+        iterator = this.get$iterator(this);
+        if (!iterator.moveNext$0())
+          return "";
+        if (separator === "") {
+          t1 = "";
+          do
+            t1 += H.S(iterator.get$current());
+          while (iterator.moveNext$0());
+        } else {
+          t1 = H.S(iterator.get$current());
+          for (; iterator.moveNext$0();)
+            t1 = t1 + separator + H.S(iterator.get$current());
+        }
+        return t1.charCodeAt(0) == 0 ? t1 : t1;
       },
       toList$1$growable: function(_, growable) {
         return P.List_List$from(this, true, H.getRuntimeTypeArgument(this, "Iterable", 0));
@@ -5935,6 +6149,9 @@
           return string;
         }
       }
+    },
+    Symbol0: {
+      "^": "Object;"
     }
   }], ["dart.dom.html", "dart:html",, W, {
     "^": "",
@@ -6339,9 +6556,9 @@
       W._EventStreamSubscription$(t2._html$_target, t2._eventType, new N.main_closure0(), false, H.getTypeArgumentByIndex(t2, 0));
       t2 = J.get$onClick$x(t1.getElementById("recover"));
       W._EventStreamSubscription$(t2._html$_target, t2._eventType, new N.main_closure1(), false, H.getTypeArgumentByIndex(t2, 0));
-      t2 = J.get$onClick$x(t1.getElementById("fullscreen"));
+      t2 = J.get$onClick$x(t1.getElementById("quit"));
       W._EventStreamSubscription$(t2._html$_target, t2._eventType, new N.main_closure2(), false, H.getTypeArgumentByIndex(t2, 0));
-      t1 = J.get$onClick$x(t1.getElementById("mute-video_"));
+      t1 = J.get$onClick$x(t1.getElementById("hidden_local_video"));
       W._EventStreamSubscription$(t1._html$_target, t1._eventType, new N.main_closure3(), false, H.getTypeArgumentByIndex(t1, 0));
     }, "call$0", "video__main$closure", 0, 0, 1],
     main_closure: {
@@ -6430,28 +6647,8 @@
     main_closure2: {
       "^": "Closure:2;",
       call$1: function(even) {
-        var t1, t2;
         P.print("recover");
-        t1 = document;
-        t1.getElementById("draw_panel").hidden = false;
-        t1.getElementById("navigator_div").hidden = false;
-        t2 = t1.getElementById("remoteVideo").style;
-        t2.position = "static";
-        t2 = t1.getElementById("localVideo").style;
-        t2.position = "static";
-        t2 = t1.getElementById("remoteVideo").style;
-        t2.width = "300px";
-        t2 = t1.getElementById("remoteVideo").style;
-        t2.height = "200px";
-        t2 = t1.getElementById("remoteVideo").style;
-        t2.zIndex = "auto";
-        t2 = t1.getElementById("localVideo").style;
-        t2.width = "300px";
-        t2 = t1.getElementById("localVideo").style;
-        t2.height = "200px";
-        t2 = t1.body;
-        t1.documentElement.scrollTop = 0;
-        t2.scrollTop = 0;
+        H.throwNoSuchMethod("", "context", [], null).callMethod$2("$", ["#icons"]).callMethod$2("fadeToggle", [H.throwRuntimeError("Cannot resolve 'JsObject'.")]);
       }
     },
     main_closure3: {
@@ -6588,6 +6785,9 @@
   };
   J.elementAt$1$ax = function(receiver, a0) {
     return J.getInterceptor$ax(receiver).elementAt$1(receiver, a0);
+  };
+  J.join$1$ax = function(receiver, a0) {
+    return J.getInterceptor$ax(receiver).join$1(receiver, a0);
   };
   J.map$1$ax = function(receiver, a0) {
     return J.getInterceptor$ax(receiver).map$1(receiver, a0);
@@ -6750,7 +6950,7 @@
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [null];
-  init.types = [{func: 1}, {func: 1, v: true}, {func: 1, args: [,]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, args: [,,]}];
+  init.types = [{func: 1}, {func: 1, v: true}, {func: 1, args: [,]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, args: [,,]}, {func: 1, args: [P.Symbol0,,]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
