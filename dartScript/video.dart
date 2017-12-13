@@ -26,7 +26,8 @@ void main(){
   });
 }
 
-void recover_all(parent){
+void recover_all(){
+    print("recover");
     document.getElementById("draw_panel").hidden = false;
     document.getElementById("navigator_div").hidden = false;
     
@@ -110,6 +111,7 @@ void mini_video(){
 }
 
 void hidden_or_unhidden_local_video(){
+  print("hidden local video");
   document.getElementById("localVideo").hidden = !document.getElementById("localVideo").hidden;
 }
 
