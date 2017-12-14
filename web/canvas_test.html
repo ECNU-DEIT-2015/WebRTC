@@ -57,6 +57,7 @@
 </div> -->
 <div id="add_div"></div>
 <button onclick="draw_img()">test</button>
+<button onclick="canvas_to_image()">canvas to img</button>
 <form id="imgForm">  
         <input type="file" class="addBorder">  
         <br/>  
@@ -186,6 +187,16 @@
     var img = document.getElementById("jj");
     console.log(img==null);
     ctx.drawImage(img,0,0);        
+    }
+
+    function get_canvas(){
+        return document.getElementsByTagName('canvas')[0];
+    }
+    function canvas_to_image(){
+        var canvas = get_canvas();
+        document.getElementById("imgContent").src = canvas.toDataURL();
+        document.getElementById("imgContent").style.width = "600px";
+        document.getElementById("imgContent").style.height = (600*0.618).toString+"px";
     }
 </script>
 <link rel="stylesheet" href="../css/bootstrap.min.css" />
