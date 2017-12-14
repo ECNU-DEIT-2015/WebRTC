@@ -33,7 +33,7 @@
 
 // Only add this code if we do not already have a canvas implementation
 if (!document.createElement('canvas').getContext) {
-
+    console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
     (function() {
 
         // alias some functions to make (compiled) code shorter

@@ -8,7 +8,7 @@
 (function(window, document, undefined){
 
     "use strict";
-
+    console.log("+++++++++++++++++++++++++++++++++++++++++++");
     var _html2canvas = {},
         previousElement,
         computedCSS,
