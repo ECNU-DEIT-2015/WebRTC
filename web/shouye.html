@@ -7,16 +7,35 @@
         <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <style type="text/css">
+            body{height:100%;}
+            a:link, a:visited{color:#333;text-decoration:none;}
+            .con1,.con2{position:relative;border:#ccc solid 1px;width:400px;height:400px;float:left;margin-right:5px;}
+            .con1{width:990px;height:500px;}
+            .handler1, .handler2{width:40px;height:400px;border:#ccc solid 1px;float:left;margin-right:25px;}
+            .handler1 a, .handler2 a{border-bottom:#ccc solid 1px;height:30px;line-height:30px;font-size:12px;display: block;text-align:center;}
+            .handler1 a.active, .handler2 a.active{background:#ddd;}
+            input{width:30px;}
+            .handler1 span, .handler2 span{width:10px;height:10px;margin:1px;display:block;border:#fff solid 1px;}
+            .handler1 span.active, .handler2 span.active{width:10px;height:10px;margin:1px;display:block;border-color:red;}
+    
+            video {
+            object-fit:fill;
+            width: 300px;
+            height: 200px;
+            }
+        </style>
     </head>
     <body>
         <div id="navigator_div"></div>
         <div class="tabbable" id="tabs-752432">
             <ul class="nav nav-tabs">
                 <li class="active">
-                     <a href="#panel-901351" data-toggle="tab">新建文件</a>
+                     <a href="#new_file" data-toggle="tab">新建文件</a>
                 </li>
                 <li>
-                     <a href="#panel-932452" data-toggle="tab">加好友</a>
+                     <a href="#jdf" data-toggle="tab">加好友</a>
                 </li>
                <li>
                     <a href="#panel-932452" data-toggle="tab">个人文件</a>
@@ -28,56 +47,60 @@
                         <a href="#panel-932452" data-toggle="tab">回收站</a>
                 </li>
             </ul>
+            
             <div class="tab-content">
-                <div class="tab-pane" id="panel-901351">
-                    <div class="row clearfix">
-                        <div class="col-md-12 column">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default4.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
+                    <div class="tab-pane active" id="new_file">
+                    </div>
+                    <div class="tab-pane" id="jdf">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="thumbnail">
+                                            <img alt="300x200" src="v3/default4.jpg" />
+                                            <div class="caption">
+                                                <h3>
+                                                    Thumbnail label
+                                                </h3>
+                                                <p>
+                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                </p>
+                                                <p>
+                                                     <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default5.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
+                                    <div class="col-md-4">
+                                        <div class="thumbnail">
+                                            <img alt="300x200" src="v3/default5.jpg" />
+                                            <div class="caption">
+                                                <h3>
+                                                    Thumbnail label
+                                                </h3>
+                                                <p>
+                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                </p>
+                                                <p>
+                                                     <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default6.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
+                                    <div class="col-md-4">
+                                        <div class="thumbnail">
+                                            <img alt="300x200" src="v3/default6.jpg" />
+                                            <div class="caption">
+                                                <h3>
+                                                    Thumbnail label
+                                                </h3>
+                                                <p>
+                                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                </p>
+                                                <p>
+                                                     <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -85,67 +108,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane active" id="panel-932452">
-                    <div class="row clearfix">
-                        <div class="col-md-12 column">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default4.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default5.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <img alt="300x200" src="v3/default6.jpg" />
-                                        <div class="caption">
-                                            <h3>
-                                                Thumbnail label
-                                            </h3>
-                                            <p>
-                                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                            </p>
-                                            <p>
-                                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
     <script src="../dartScript/navigator.dart.js"></script>
-    <script>
-    $(function () { $(".tooltip-options a").tooltip({html : true });});
+    <script src="../js/chosen_panel_element_add_event_listener.js"></script>
+    <script src="../js/file_to_string.js"></script>
+    <script src="../js/canvas.js"></script>
+    <script>        
+        window.onload = function(){
+        //empty file   
+            html_element({"id":"new_file","file":"new_file.html"},add_new_file_event_listener);
+        // 加好友file
+        // html_element({"id":"new_file","file":"new_file.html"},add_empty);
+        // 个人文件file
+        // 写作文件file
+        // 回收站file
+        // document.getElementById("empty_canvas").addEventListener("click",function(){
+        //     add_canvas();
+        //     document.getElementById("new_file_panel").hidden = false;
+        // });
+        }
     </script>
 </html>

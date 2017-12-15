@@ -1,5 +1,4 @@
 import "dart:html";
-import 'package:js/js.dart' as js;
 
 void main(){
   var video_button = querySelector("#only_video");
@@ -33,8 +32,6 @@ void main(){
 
 void recover_all(){
     print("recover");
-    
-    js.context.callMethod(r'$', ['#icons']).callMethod('fadeToggle', [new js.JsObject.jsify({'speed': 'slow'})]);
 
     document.getElementById("draw_panel").hidden = false;
     document.getElementById("navigator_div").hidden = false;
