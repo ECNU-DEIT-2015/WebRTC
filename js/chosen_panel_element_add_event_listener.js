@@ -17,6 +17,17 @@ function add_new_file_event_listener(){
         html_element({"id":"display_panel","file":"image_panel.html"},null);
     });
 
+    document.getElementById("call_friend").addEventListener("click",function(){
+        var this_node = document.getElementById("display_panel");
+        remove_all_child(this_node);
+        html_element({"id":"display_panel","file":"friend_panel.html"},null);
+    });
+
+    document.getElementById("recycle_bin").addEventListener("click",function(){
+        var this_node = document.getElementById("display_panel");
+        remove_all_child(this_node);
+        html_element({"id":"display_panel","file":"bin_panel.html"},null);
+    });
 }
 
 
