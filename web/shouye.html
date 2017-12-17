@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../js/angular.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <style type="text/css">
             body{height:100%;}
@@ -28,7 +29,10 @@
         </style>
     </head>
     <body>
-        <div id="navigator_div"></div>
+        <div ng-app="navigator_app">
+            <div ng-include="'navigator.html'" id="navigator_div" ></div> 
+        </div>
+        <!-- <div id="navigator_div" ></div> -->
         <div class="tabbable" id="tabs-752432">
             <ul class="nav nav-tabs">
                 <li class="active">
@@ -62,10 +66,11 @@
             </div>
         </div>
     </body>
-    <script src="../dartScript/navigator.dart.js"></script>
+    <!-- <script src="../dartScript/navigator.dart.js"></script> -->
     <script src="../js/chosen_panel_element_add_event_listener.js"></script>
     <script src="../js/file_to_string.js"></script>
     <script src="../js/canvas.js"></script>
+    
     <script>        
         window.onload = function(){
         //empty file   
@@ -84,4 +89,5 @@
         // });
         }
     </script>
+    <script src="../js/my_angular.js"></script>
 </html>

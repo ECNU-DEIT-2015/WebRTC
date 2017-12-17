@@ -17,7 +17,7 @@
     </style>
     
 </head>
-<body >
+<body style="">
 <div class="con1">
 
 </div>
@@ -51,22 +51,8 @@
     <a class="ease" href="javascript:;">橡皮</a>
 </div>
 
-<!-- <div id="videos">
-    <video id="localVideo" autoplay muted></video>
-    <video id="remoteVideo" autoplay></video>
-</div> -->
-<div id="add_div"></div>
-<button onclick="draw_img()">test</button>
-<button onclick="canvas_to_image()">canvas to img</button>
-<form id="imgForm">  
-        <input type="file" class="addBorder">  
-        <br/>  
-        <button type="button" onclick="load_then_draw()">获取图片</button>  
-</form>  
-      
-    <div class="addBorder" id="imgDiv">  
-        <img id="imgContent">  
-</div>
+<button onclick="to_json()">canvas to json</button>
+<img id="canvas_img" style="width:300px;height:200px">
 <script src="../lab/jquery.js"></script>
 <script src="../lab/excanvas.js"></script>
 <script src="../lab/html2canvas.js"></script>
@@ -116,93 +102,43 @@
     $('.handler2 a.line').click(function () { panel2.type = 'line'; });
     $('.handler2 a.curve').click(function () { panel2.type = 'curve'; });
     $('.handler2 a.ease').click(function () { panel2.type = 'ease'; });
-
-</script>
-<script>
-    $(function(){
-        console.log("draw img");
-        var img = document.createElement("IMG");
-        img.src = "http://www.w3school.com.cn/i/eg_tulip.jpg";
-        var canvas = document.getElementsByTagName('canvas')[0];
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img,0,0);
-    });
-    function add_node(){
-        var button = document.createElement("button");
-        button.textContent = "jjj";
-        document.getElementById("add_div").appendChild(button);
-    }
-    function draw_img(){
-        console.log("draw img");
-        var img = document.createElement("IMG");
-        img.setAttribute("src","http://www.w3school.com.cn/i/eg_tulip.jpg")
-        // img.src = "http://www.w3school.com.cn/i/eg_tulip.jpg";
-        // var img = document.getElementById("imgContent");
-        var canvas = document.getElementsByTagName('canvas')[0];
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img,0,0);
-        // document.getElementById("add_div").appendChild(img);
-    } 
-   
-    function load_then_draw(){
-        loadImg();
-        window.setTimeout(ddd,50);
-    }
-    function loadImg(){  
-        //获取文件  
-        var file = $("#imgForm").find("input")[0].files[0];  
-    
-        //创建读取文件的对象  
-        var reader = new FileReader();  
-    
-        //创建文件读取相关的变量  
-        var imgFile;  
-    
-        //为文件读取成功设置事件  
-        reader.onload=function(e) {  
-       
-            imgFile = e.target.result;  
-            console.log("imgFile");  
-            // $("#imgContent").attr('src', imgFile);  
-            var img = new Image();
-            img.setAttribute('src',imgFile);
-            document.getElementById("add_div").appendChild(img);
-            img.hidden = false;
-            img.id = "jj";
-
-            // ddd();
-            // document.getElementById("imgContent").src = imgFile;
-            // var img = document.getElementById("imgContent");
-            
-            // console.log(ctx.getImageData(0,0,990,500).data.length);
-        };  
-  
-        //正式读取文件  
-        reader.readAsDataURL(file);  
-    }  
-    function ddd(){
-        console.log("ddd");
-        var canvas = document.getElementsByTagName('canvas')[0];
-        var ctx = canvas.getContext("2d");
-    var img = document.getElementById("jj");
-    console.log(img==null);
-    ctx.drawImage(img,0,0);        
-    }
-
-    function get_canvas(){
-        return document.getElementsByTagName('canvas')[0];
-    }
-    function canvas_to_image(){
-        var canvas = get_canvas();
-        document.getElementById("imgContent").src = canvas.toDataURL();
-        document.getElementById("imgContent").style.width = "600px";
-        document.getElementById("imgContent").style.height = (600*0.618).toString+"px";
-    }
 </script>
 <link rel="stylesheet" href="../css/bootstrap.min.css" />
 <script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/lib/adapter.js"></script>
+<script>
+    var socket = io.connect();
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var image_data = document.getElementsByTagName("canvas")[0].getContext("2d").getImageData(0,0,990,500);
+    function to_json(){
+        // var array = document.getElementsByTagName("canvas")[0].getContext("2d").getImageData(0,0,990,500).data;
+        // console.log(array);
+        // array =  Array.from(array)
+        // var m = {"id":"1","data":array};
+        var m = {'i':'1','data':canvas.toDataURL()};
+        var data = JSON.stringify(m);
+        socket.emit("save_canvas",data);
+        console.log("send data");
+        // document.getElementById("canvas_img").src = canvas.toDataURL();
+    }
+    
+    socket.on("images",function(msg){
+        console.log("image coming");
+        
+        msg = JSON.parse(msg);
+        var dataurl = msg["data"];
+        document.getElementById("canvas_img").src = dataurl;
+        var temp_img = document.createElement("IMG");
+        temp_img.src = dataurl;
+        canvas.getContext("2d").drawImage(temp_img,0,0);
+        console.log("draw canvas success");
+        // var canvas_ = document.createElement("canvas");
+        // canvas_.getContext('2d').putImageData(imagedata,0,0);
+        // Con
+        // document.getElementById("canvas_img").src = canvas_.toDataURL();
+    });
+</script>
 </body>
 </html>

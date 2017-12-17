@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+</head>
+  <body ng-controller="MainCtrl">
+    <input ng-model="user.name" />
+    Name updated: {{updated}} times.
+  </body>
+  <script>
+  app = angular.module('app', []);
+
+app.controller('MainCtrl', function($scope) {
+  $scope.user = { name: "Fox" };
+  
+  $scope.updated = 0;
+  
+  $scope.$watch('user', function(newValue, oldValue) {
+    if (newValue === oldValue) { return; }
+    $scope.updated++;
+  }, true);
+});
+  </script>
+</html>

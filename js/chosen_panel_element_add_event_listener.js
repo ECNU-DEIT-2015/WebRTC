@@ -3,6 +3,8 @@ function add_new_file_event_listener(){
     document.getElementById("empty_canvas").addEventListener("click",function(){
         var this_node = document.getElementById("empty_canvas");
         var display_panel_node = document.getElementById("display_panel");
+        set_other_not_active(this_node);
+        this_node.className += " active";
         remove_all_child(display_panel_node); 
         html_element({"id":"display_panel","file":"empty_panel.html"},add_canvas);
     });
@@ -10,6 +12,8 @@ function add_new_file_event_listener(){
     document.getElementById("old_canvas").addEventListener("click",function(){
         var this_node = document.getElementById("old_canvas");
         var display_panel_node = document.getElementById("display_panel");
+        set_other_not_active(this_node);
+        this_node.className += " active";
         remove_all_child(display_panel_node); 
         html_element({"id":"display_panel","file":"old_file_panel.html"},null);
     });
@@ -17,6 +21,8 @@ function add_new_file_event_listener(){
     document.getElementById("image_canvas").addEventListener("click",function(){
         var this_node = document.getElementById("image_canvas");
         var display_panel_node = document.getElementById("display_panel");
+        set_other_not_active(this_node);
+        this_node.className += " active";
         remove_all_child(display_panel_node); 
         html_element({"id":"display_panel","file":"image_panel.html"},null);
     });
@@ -24,6 +30,8 @@ function add_new_file_event_listener(){
     document.getElementById("call_friend").addEventListener("click",function(){
         var this_node = document.getElementById("call_friend");
         var display_panel_node = document.getElementById("display_panel");
+        set_other_not_active(this_node);
+        this_node.className += " active";
         remove_all_child(display_panel_node); 
         html_element({"id":"display_panel","file":"friend_panel.html"},null);
     });
@@ -31,6 +39,8 @@ function add_new_file_event_listener(){
     document.getElementById("recycle_bin").addEventListener("click",function(){
         var this_node = document.getElementById("recycle_bin");
         var display_panel_node = document.getElementById("display_panel");
+        set_other_not_active(this_node);
+        this_node.className += " active";
         remove_all_child(display_panel_node); 
         html_element({"id":"display_panel","file":"bin_panel.html"},null);
     });
@@ -52,15 +62,17 @@ function remove_all_child(parent_node){
     }
 }
 
-// function set_other_not_active(node){
-//     // var children = node.parentNode.childNodes;
-//     // for(var i=0; i<children.length; i++){
-//     //     if(children[i] != node){
-//     //         var name = children[i].className;
-//     //         name = name.split("active")[0].trim();
-//     //         children[i].className = name;
-//     //     }
-//     // }
+function set_other_not_active(node){
+    var children = node.parentNode.childNodes;
+    for(var i=0; i<children.length; i++){
+        try{
+            var name = children[i].className;
+            name = name.split("active")[0].trim();
+            children[i].className = name;
+        }catch(e){
+        }
+    }
+}
 
 //     var pre_node = node.previousSibling;
 //     var next_node = node.nextSibling;

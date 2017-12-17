@@ -1,53 +1,68 @@
-<nav class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">WebRTC</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" />
-                </div> <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src="../img/test.png" class="img-rounded dropdown-toggle" />
-                    <ul class="dropdown-menu">
-                        <li>
-                             <a href="#">Action</a>
-                        </li>
-                        <li>
-                             <a href="#">Another action</a>
-                        </li>
-                        <li>
-                             <a href="#">Something else here</a>
-                        </li>
-                        <li class="divider">
-                        </li>
-                        <li>
-                             <a href="#">Separated link</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                     <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="width:50px;height:50px" src="http://www.runoob.com/wp-content/uploads/2014/06/download.png" class="img-circle"><strong class="caret"></strong></a> -->
-                     <img data-toggle="dropdown" style="width:50px;height:50px" src="../img/test.png" class="img-circle dropdown-toggle">
-                    <ul class="dropdown-menu">
-                        <li>
-                             <a href="#">Action</a>
-                        </li>
-                        <li>
-                             <a href="#">Another action</a>
-                        </li>
-                        <li>
-                             <a href="#">Something else here</a>
-                        </li>
-                        <li class="divider">
-                        </li>
-                        <li>
-                             <a href="#">Separated link</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-default" role="navigation" ng-controller="navigator_controller" >
+    <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">WebRTC</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" ng-model="search_value"/>
+                <ul class="dropdown-menu" ng-hide="data_list.length==0">
+                    <li ng-repeat="x in data_list">
+                        <div class="col-sm-6">
+                            <h4>{{x["h"]}}</h4>
+                            <p>{{x["p"]}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="#" class="thumbnail">
+                                <img src="{{x['img']}}" style="width:150px;height:100px"/>
+                            </a>
+                        </div>
+                        <hr>
+                    </li>
+                </ul>
+            </div> 
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src="../img/test.png" class="img-rounded dropdown-toggle" />
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">Action</a>
+                    </li>
+                    <li>
+                            <a href="#">Another action</a>
+                    </li>
+                    <li>
+                            <a href="#">Something else here</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                            <a href="#">Separated link</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="width:50px;height:50px" src="http://www.runoob.com/wp-content/uploads/2014/06/download.png" class="img-circle"><strong class="caret"></strong></a> -->
+                    <img data-toggle="dropdown" style="width:50px;height:50px" src="../img/test.png" class="img-circle dropdown-toggle">
+                <ul class="dropdown-menu">
+                    <li>
+                            <a href="#">Action</a>
+                    </li>
+                    <li>
+                            <a href="#">Another action</a>
+                    </li>
+                    <li>
+                            <a href="#">Something else here</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                            <a href="#">Separated link</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
