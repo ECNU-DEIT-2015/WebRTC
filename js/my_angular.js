@@ -1,4 +1,4 @@
-var app = angular.module('navigator_app', []);
+var app = angular.module('shouye_app', []);
 app.controller('navigator_controller', function($scope, $http) {
 $scope.data_list = []
 $scope.$watch('search_value', function(newValue, oldValue) {
