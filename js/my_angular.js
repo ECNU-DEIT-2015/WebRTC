@@ -18,9 +18,23 @@ function load_angular(){
     app.controller('add_friend_controller', function($http,$scope){
         $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
             {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
+            {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'},
             {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
+        for(var i=0; i<4; i++){
+            $scope.lasted_friend.push({'name':'ze','qianming':'be honest','profile':'../images/u_03.png'});
+        }
         $scope.search_friend = [];
         console.log("add_friend_constroller");
+        $scope.$watch('friend_id', function(newValue,oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.search_friend.push({'name':'ze','qianming':'be honest','profile':'../images/u_03.png'});
+           }else{
+               $scope.search_friend.pop()
+           }
+        },true);
+
     });
 }
 
