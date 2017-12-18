@@ -1,0 +1,47 @@
+    <form class=\"navbar-form navbar-left\" role=\"search\">
+        <div class=\"form-group\">
+            <input type=\"text\" class=\"form-control\" ng-model=\"search_value\"/>
+            {{search_value}}
+        </div> <button type=\"submit\" class=\"btn btn-default\">Submit</button>
+    </form>
+    <div id=\"old_image_file_list\">
+            <div class=\"row clearfix\">
+                    <div class=\"col-md-12 column\">
+                        <div class=\"row\">
+                            <div class=\"col-md-4\" ng-repeat=\"file in lasted_file\" ng-hide=\"search_file.length != 0\">
+                                <div class=\"thumbnail\">
+                                    <img alt=\"300x200\" src=\"{{file['img']}}\" />
+                                    <div class=\"caption\">
+                                        <h3>
+                                            {{file['h']}}
+                                        </h3>
+                                        <p>
+                                            {{file['p']}}
+                                        </p>
+                                        <p>
+                                             <a class=\"btn btn-primary\" href=\"#\">Action</a> <a class=\"btn\" href=\"#\">Action</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=\"col-md-4\" ng-repeat=\"file in search_file\" ng-hide=\"search_file.length == 0\">
+                                <div class=\"thumbnail\">
+                                    <img alt=\"300x200\" src=\"{{file['img']}}\" />
+                                    <div class=\"caption\">
+                                        <h3>
+                                            {{file['h']}}
+                                        </h3>
+                                        <p>
+                                            {{file['p']}}
+                                        </p>
+                                        <p>
+                                             <a class=\"btn btn-primary\" href=\"#\">Action</a> <a class=\"btn\" href=\"#\">Action</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <div id=\"draw_panel\"></div>

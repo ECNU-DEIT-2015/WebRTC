@@ -51,7 +51,7 @@
             </ul>
             
             <div class="tab-content">
-                <div class="tab-pane active" id="new_file">
+                <div class="tab-pane active" id="new_file" ng-include="'new_file.html'">
                 </div>
                 <div class="tab-pane" id="add_friend" ng-include="'add_friend.html'">
                 </div>
@@ -72,7 +72,7 @@
     <script>        
         window.onload = function(){
         //empty file   
-            html_element({"id":"new_file","file":"new_file.html"},add_new_file_event_listener);
+            // html_element({"id":"new_file","file":"new_file.html"},add_new_file_event_listener);
         // 加好友file
             // html_element({"id":"add_friend","file":"add_friend.html"},null);
         // 个人文件file

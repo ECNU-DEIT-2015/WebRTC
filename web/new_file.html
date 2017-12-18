@@ -1,14 +1,243 @@
-<div class="row clearfix">
-    <div class="col-md-2 column" style="background:rgb(248, 248, 248)" id="chose_panel">
-        <ul class="nav nav-pills nav-stacked">
-            <li class="list-group-item" id="empty_canvas"><a>empty</a></li>
-            <li class="list-group-item" id="old_canvas"><a>old file</a></li>
-            <li class="list-group-item" id="image_canvas"><a>add image</a></li>
-            <li class="list-group-item" id="call_friend"><a>call friend</a></li>
-            <li class="list-group-item" id="recycle_bin"><a>recycle bin</a></li>
-        </ul>
-    </div>
-    <div class="col-md-10 column" id="display_panel">
-       
+<div ng-controller="new_file_controller">
+    <div class="row clearfix">
+        <div class="col-md-2 column" style="background:rgb(248, 248, 248)" id="chose_panel">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="{{empty_class}}" id="empty_canvas" ng-click="empty_panel_click()"><a>empty</a></li>
+                <li class="{{old_class}}" id="old_canvas" ng-click="old_panel_click()"><a>old file</a></li>
+                <li class="{{image_class}}" id="image_canvas" ng-click="image_panel_click()"><a>add image</a></li>
+                <li class="{{friend_class}}" id="call_friend" ng-click="friend_panel_click()"><a>call friend</a></li>
+                <li class="{{bin_class}}" id="recycle_bin" ng-click="bin_panel_click()"><a>recycle bin</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10 column" id="display_panel">
+            
+            <div ng-hide="empty_panel_hide">
+                <div class="row clearfix" id="new_file_panel">
+                    <div class="col-md-12 column">
+                        <div class="row clearfix">
+                            <div class="col-md-1 column">
+                                <div class="handler1" >
+                                        <a class="rect" href="javascript:;">矩形</a>
+                                        <a class="round" href="javascript:;">圆形</a>
+                                        <a class="line" href="javascript:;">直线</a>
+                                        <a class="curve" href="javascript:;">曲线</a>
+                                        <a class="arrow" href="javascript:;">箭头</a>
+                                        <a class="ease" href="javascript:;">橡皮</a>
+                                        <a class="back" href="javascript:;">后退</a>
+                                        <a class="forward" href="javascript:;">前进</a>
+                                        <a class="clear" href="javascript:;">清除</a>
+                                        <a class="save" href="javascript:;">保存</a>
+                                        <input class="lineWidth" value="1" autocomplete="off" />
+                                        <span style="background: red;"></span>
+                                        <span style="background: green;"></span>
+                                        <span style="background: blue;"></span>
+                                        <span style="background: #000;"></span>
+                                </div>	
+                            </div>
+                            <div class="col-md-11 column">
+                                <div class="con1" style="margin:0px 0px 0px -40px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-hide="old_file_panel_hide">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="old_search_value"/>
+                    </div> <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <div id="old_image_file_list">
+                        <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div class="row">
+                                        <div class="col-md-4" ng-repeat="file in old_search_file" ng-hide="old_search_file.length == 0">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" src="{{file['img']}}" />
+                                                <div class="caption">
+                                                    <h3 >
+                                                        {{file['h']}}
+                                                    </h3>
+                                                    <p>
+                                                        {{file['p']}}
+                                                    </p>
+                                                    <p>
+                                                         <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" ng-repeat="file in lasted_old_file" ng-hide="old_search_file.length != 0">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" src="{{file['img']}}" />
+                                                <div class="caption">
+                                                    <h3 >
+                                                        {{file['h']}}
+                                                    </h3>
+                                                    <p>
+                                                        {{file['p']}}
+                                                    </p>
+                                                    <p>
+                                                         <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <div id="draw_panel"></div>
+            </div>
+            
+            <div  ng-hide="image_panel_hide">
+                <form role="form">
+                    <div class="form-group">
+                            <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile" />
+                        <p class="help-block">
+                            Example block-level help text here.
+                        </p>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <div id="draw_panel"></div>
+                
+                
+                <form id="imgForm">  
+                        <input type="file" class="addBorder">  
+                        <br/>  
+                        <button type="button" onclick="load_then_draw()">获取图片</button>  
+                </form> 
+            </div>
+            
+            <div ng-hide="friend_panel_hide">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" />
+                    </div> <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img alt="300x200" src="v3/default4.jpg" />
+                                    <div class="caption">
+                                        <h3>
+                                            Thumbnail label
+                                        </h3>
+                                        <p>
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                        </p>
+                                        <p>
+                                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img alt="300x200" src="v3/default5.jpg" />
+                                    <div class="caption">
+                                        <h3>
+                                            Thumbnail label
+                                        </h3>
+                                        <p>
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                        </p>
+                                        <p>
+                                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img alt="300x200" src="v3/default6.jpg" />
+                                    <div class="caption">
+                                        <h3>
+                                            Thumbnail label
+                                        </h3>
+                                        <p>
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                        </p>
+                                        <p>
+                                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div  ng-hide="bin_panel_hide">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" />
+                    </div> <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <div id="old_image_file_list">
+                        <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" src="v3/default4.jpg" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Thumbnail label
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                         <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" src="v3/default5.jpg" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Thumbnail label
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                         <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img alt="300x200" src="v3/default6.jpg" />
+                                                <div class="caption">
+                                                    <h3>
+                                                        Thumbnail label
+                                                    </h3>
+                                                    <p>
+                                                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                                    </p>
+                                                    <p>
+                                                         <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
 </div>

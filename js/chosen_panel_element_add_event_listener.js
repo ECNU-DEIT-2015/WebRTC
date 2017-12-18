@@ -1,4 +1,4 @@
-function add_new_file_event_listener(){
+function add_new_file_event_listener(app){
     var active_node = null;
     document.getElementById("empty_canvas").addEventListener("click",function(){
         var this_node = document.getElementById("empty_canvas");
@@ -15,7 +15,10 @@ function add_new_file_event_listener(){
         set_other_not_active(this_node);
         this_node.className += " active";
         remove_all_child(display_panel_node); 
-        html_element({"id":"display_panel","file":"old_file_panel.html"},null);
+        
+        html_element({"id":"display_panel","file":"old_file_panel.html"},function(){
+            app.controller("old_file_panel_controller",function($scope){});
+        });
     });
 
     document.getElementById("image_canvas").addEventListener("click",function(){
@@ -113,3 +116,10 @@ function set_other_not_active(node){
 //     // console.log(node.parentNode);
 // }
 
+function old_file_panel(){
+    var old_file = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
+    {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
+    {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
+
+    
+}

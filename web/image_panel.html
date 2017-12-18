@@ -1,17 +1,19 @@
-<form role="form">
-    <div class="form-group">
-            <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile" />
-        <p class="help-block">
-            Example block-level help text here.
-        </p>
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
-<div id="draw_panel"></div>
-
-
-<form id="imgForm">  
-        <input type="file" class="addBorder">  
-        <br/>  
-        <button type="button" onclick="load_then_draw()">获取图片</button>  
-</form> 
+<div ng-controller="image_panel_controller" ng-hide="image_panel_hide">
+    <form role="form">
+        <div class="form-group">
+                <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile" />
+            <p class="help-block">
+                Example block-level help text here.
+            </p>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div id="draw_panel"></div>
+    
+    
+    <form id="imgForm">  
+            <input type="file" class="addBorder">  
+            <br/>  
+            <button type="button" onclick="load_then_draw()">获取图片</button>  
+    </form> 
+</div>
