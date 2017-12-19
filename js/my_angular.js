@@ -33,6 +33,21 @@ function load_angular(){
            }
         },true);
 
+        $scope.friends = [];
+        $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
+        {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
+        {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
+        $scope.$watch('friend_search_value', function(newValue, oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.friends.push({'name':'ze','qianming':'be honest','profile':'../images/u_03.png'});
+           }else{
+               $scope.friends.pop()
+           }
+        },true);
+
+
         all_hide_true($scope);
 
         $scope.empty_panel_click = function(){
