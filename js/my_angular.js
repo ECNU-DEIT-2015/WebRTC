@@ -48,8 +48,22 @@ function load_angular(){
         },true);
 
 
-        all_hide_true($scope);
+        $scope.bin_search_file = [];
+        $scope.lasted_bin_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
+        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
+        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"}];
+        $scope.$watch('bin_search_value', function(newValue, oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.bin_search_file.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"});
+           }else{
+               $scope.bin_search_file.pop()
+           }
+        },true);
 
+
+        all_hide_true($scope);
         $scope.empty_panel_click = function(){
             all_hide_true($scope);
             $scope.empty_panel_hide = false;
