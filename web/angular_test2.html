@@ -1,0 +1,23 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <title>My AngularJS App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  </head>
+  <body >
+        <hello></hello>
+        <input type="text" name="" id="" ng-model="good">
+        {{good}}
+  </body>
+  <script>
+    var app = angular.module('myapp',[]);
+    app.directive('hello', function() {
+        return {
+            restrict: 'E',
+            template: '<div>Hi there</div>',
+            replace: true
+        };
+    });
+
+  </script>
+</html>

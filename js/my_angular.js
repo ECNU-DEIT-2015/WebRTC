@@ -19,6 +19,8 @@ function load_angular(){
     var app = angular.module('shouye_app', []);
     app.controller('new_file_controller', function($scope, $http){
 
+        $scope.empty_canvas = []
+
         $scope.old_search_file = []
         $scope.lasted_old_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
         {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
@@ -65,31 +67,45 @@ function load_angular(){
 
         all_hide_true($scope);
         $scope.empty_panel_click = function(){
+
             all_hide_true($scope);
             $scope.empty_panel_hide = false;
             $scope.empty_class = active;
-            add_canvas();
+            $scope.empty_canvas = [1];
+            if($scope.empty_canvas.length == 1){
+                window.setTimeout(add_canvas,250);
+            }
+            // window.setTimeout(add_canvas,1000);
+            // add_canvas();    
         };
 
         $scope.old_panel_click = function(){
             all_hide_true($scope);
+            $scope.empty_canvas = [];
             $scope.old_class = active;
             $scope.old_file_panel_hide = false;
         };
 
         $scope.image_panel_click = function(){
+            
+            $scope.empty_canvas = [];
+
             all_hide_true($scope);
             $scope.image_class = active;
             $scope.image_panel_hide = false;
         }
 
         $scope.friend_panel_click = function(){
+            $scope.empty_canvas = [];
+
             all_hide_true($scope);
             $scope.friend_class = active;
             $scope.friend_panel_hide = false;
         }
 
         $scope.bin_panel_click = function(){
+            $scope.empty_canvas = [];
+
             all_hide_true($scope);
             $scope.bin_class = active;
             $scope.bin_panel_hide = false;
