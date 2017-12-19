@@ -92,26 +92,33 @@
             </div>
             
             <div  ng-hide="image_panel_hide">
-                <form role="form">
-                    <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile" />
-                        <p class="help-block">
-                            Example block-level help text here.
-                        </p>
+                <div class="jumbotron">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-md-4 column">
+                            </div>
+                            <div class="col-md-4 column">
+                                <div class="alert alert-success alert-dismissable" style="background-color: rgb(248,248,248)">
+                                    <form role="form" class="navbar-form">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="name" 
+                                                    placeholder="请输入名称">
+                                        </div><br/><br/>
+                                            <input style="margin:0px 0px 0px 50px" type="file" id="inputfile" class="form-check-input">
+                                        <br>
+                                        <button style="margin:0px 0px 0px 50px" type="submit" class="btn btn-default">提交</button>
+                                    </form>    
+                            </div>
+                                
+                            </div>
+                            <div class="col-md-4 column">
+                            </div>
+                        </div>
+                       
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <div id="draw_panel"></div>
-                
-                
-                <form id="imgForm">  
-                        <input type="file" class="addBorder">  
-                        <br/>  
-                        <button type="button" onclick="load_then_draw()">获取图片</button>  
-                </form> 
+                </div>
             </div>
-            
+
             <div ng-hide="friend_panel_hide">
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
