@@ -1,24 +1,33 @@
-<div id="old_image_file_list">
+<div >
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="row">
                 <div class="col-md-4" ng-repeat="file in search_file" ng-hide="search_file.length == 0">
                     <div class="thumbnail">
-                        <img alt="300x200" src="{{file['img']}}" />
+                        <img alt="300x200" src="{{file['image']}}" />
                         <div class="caption">
                             <h3>
                                 {{file['headline']}}
                             </h3>
                             <p>
                                 {{file['introduction']}}
-                            </p>
+                            </p><br>
                             <div ng-hide="labels.length == 0">
-                                <ul>
-                                    <li ng-repeat="label in labels"><span class="label label-default">默认标签</span></li>
-                                </ul>
-                            </div>
+                                <span ng-repeat="label in labels" class="badge pull-right">苹果</span>
+                            </div><br>
                             <p>
-                                    <a class="btn btn-default" href="#">编辑</a> <a class="btn btn-primary" href="#">call friend</a> <a class="btn btn-danger" href="#">删除</a>
+                                <div class="row clearfix">
+                                    <div class="col-md-3 column"></div>
+                                    <div class="col-md-3 column">
+                                            <a class="btn btn-default" href="#" ng-click="modify_image()">编辑</a>
+                                    </div>
+                                    <div class="col-md-3 column">
+                                            <a class="btn btn-primary" href="#">call friend</a>
+                                    </div>
+                                    <div class="col-md-3 column">
+                                            <a class="btn btn-danger" href="#">删除</a>
+                                    </div>
+                                </div>
                             </p>
                         </div>
                     </div>
