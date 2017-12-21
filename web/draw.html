@@ -1,8 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <title>WebRTC</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../js/angular.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>canvas</title>
     <style type="text/css">
         body{height:100%;}
         a:link, a:visited{color:#333;text-decoration:none;}
@@ -21,11 +26,8 @@
         height: 200px;
         }
     </style>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 </head>
-    <body >
+<body >
         <div id="navigator_div"></div>
         <div id="icons" class="" hidden="true">
                 <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="-10 -10 68 68">
@@ -122,8 +124,8 @@
 
 
         <button id="only_video">only video</button>
-        <button id="mini_video">mini video</button>
-        <button id="recover">recover</button>
+        <!-- <button id="mini_video">mini video</button> -->
+        <!-- <button id="recover">recover</button> -->
 
         <script src="../lab/jquery.js"></script>
         <script src="../lab/excanvas.js"></script>
