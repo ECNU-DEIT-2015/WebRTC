@@ -253,20 +253,41 @@ function load_angular(){
     });
 
     app.controller('cooperation_file_controller', function($http,$scope){
-        $scope.lasted_cooperation_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"}];
+        // $scope.lasted_cooperation_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
+        // {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
+        // {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"}];
 
-        $scope.search_file = [];
-        $scope.$watch('search_value', function(newValue, oldValue) {
+        // $scope.search_file = [];
+        // $scope.$watch('search_value', function(newValue, oldValue) {
+        //     if (newValue === oldValue) {
+        //         return;
+        //     }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+        //         $scope.search_file.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"});
+        //     }else{
+        //         $scope.search_file.pop()
+        //     }
+        // }, true);
+
+        $scope.labels = [1,2,3,4];
+        $scope.search_file = []
+        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;
-            }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-                $scope.search_file.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"});
-            }else{
-                $scope.search_file.pop()
-            }
-        }, true);
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.search_file.push({"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"});
+           }else{
+               $scope.search_file.pop()
+           }
+        },true);
+
+        $scope.modify_image = function(){
+            console.log("modify_image");
+            $scope.$parent.file_box_canvas = [1];
+            window.setTimeout(add_canvas,250);
+        };
     });
 
     app.controller('bin_controller', function($http,$scope){
@@ -292,7 +313,7 @@ function load_angular(){
         $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
         {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
         {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
-        $scope.$watch('old_search_value', function(newValue,oldValue){
+        $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;
            }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
