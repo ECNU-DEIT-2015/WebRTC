@@ -58,6 +58,7 @@ function load_angular(){
         $scope.add_image_ = false;
         $scope.image_url_ = '';
         $scope.image_canvas = [];
+        $scope.file_box_canvas = []; //希望从file box的点击编辑调到编辑界面
 
         $scope.empty_canvas = []
 
@@ -281,6 +282,12 @@ function load_angular(){
                $scope.old_search_file.pop()
            }
         },true);
+
+        $scope.modify_image = function(){
+            console.log("modify_image");
+            $scope.$parent.file_box_canvas = [1];
+            window.setTimeout(add_canvas,250);
+        };
     });
 
     app.controller("file_box_controller_01", function($http,$scope){
@@ -298,6 +305,31 @@ function load_angular(){
                $scope.old_search_file.pop()
            }
         },true);
+
+        $scope.modify_image = function(){
+            console.log("modify_image");
+            $scope.file_box_canvas = [1];
+        }
+    });app.controller("file_box_controller_01", function($http,$scope){
+        $scope.labels = [1,2,3,4,9];
+        $scope.search_file = []
+        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        $scope.$watch('old_search_value', function(newValue,oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
+           }else{
+               $scope.old_search_file.pop()
+           }
+        },true);
+
+        $scope.modify_image = function(){
+            console.log("modify_image");
+            $scope.file_box_canvas = [1];
+        }
     });
 }
 
