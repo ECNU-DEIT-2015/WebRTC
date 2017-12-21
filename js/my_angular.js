@@ -282,6 +282,23 @@ function load_angular(){
            }
         },true);
     });
+
+    app.controller("file_box_controller_01", function($http,$scope){
+        $scope.labels = [1,2,3,4,9];
+        $scope.search_file = []
+        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        $scope.$watch('old_search_value', function(newValue,oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
+           }else{
+               $scope.old_search_file.pop()
+           }
+        },true);
+    });
 }
 
 
