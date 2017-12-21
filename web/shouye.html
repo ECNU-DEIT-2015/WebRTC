@@ -65,7 +65,10 @@
                     </div>
                 </div>
             </div>  
-            <div ng-show="temp_panel_show"></div>
+            <div ng-show="temp_panel_show">
+                <a href="" class="glyphicon glyphicon-arrow-left btn btn-default" ng-click="return_main_panel()">返回</a>
+                <drawcanvas ng-repeat="canvas in temp_canvas"></drawcanvas>
+            </div>
         </div>
     </body>
     <!-- <script src="../dartScript/navigator.dart.js"></script> -->

@@ -77,49 +77,6 @@ function load_angular(){
 
         $scope.empty_canvas = []
 
-        $scope.old_search_file = []
-        $scope.lasted_old_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"}];
-        $scope.$watch('old_search_value', function(newValue,oldValue){
-            if (newValue === oldValue) {
-                return;
-           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-               $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
-           }else{
-               $scope.old_search_file.pop()
-           }
-        },true);
-
-        $scope.friends = [];
-        $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
-        {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
-        {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
-        $scope.$watch('friend_search_value', function(newValue, oldValue){
-            if (newValue === oldValue) {
-                return;
-           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-               $scope.friends.push({'name':'ze','qianming':'be honest','profile':'../images/u_03.png'});
-           }else{
-               $scope.friends.pop()
-           }
-        },true);
-
-
-        $scope.bin_search_file = [];
-        $scope.lasted_bin_file = [{"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/2.png"},
-        {"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"}];
-        $scope.$watch('bin_search_value', function(newValue, oldValue){
-            if (newValue === oldValue) {
-                return;
-           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-               $scope.bin_search_file.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/3.png"});
-           }else{
-               $scope.bin_search_file.pop()
-           }
-        },true);
-
 
         all_hide_true($scope);
         $scope.empty_panel_click = function(){
@@ -146,7 +103,7 @@ function load_angular(){
 
         $scope.image_panel_click = function(){
             
-            $scope.empty_canvas = [];
+            $scope.empty_canvas = []; //将empty panel的canvas删除
 
             all_hide_true($scope);
             $scope.image_class = active;
@@ -259,11 +216,11 @@ function load_angular(){
            }
         },true);
 
-        $scope.modify_image = function(){
-            console.log("modify_image");
-            $scope.$parent.file_box_canvas = [1];
-            window.setTimeout(add_canvas,250);
-        };
+        // $scope.modify_image = function(){
+        //     console.log("modify_image");
+        //     $scope.$parent.file_box_canvas = [1];
+        //     window.setTimeout(add_canvas,250);
+        // };
 
     });
 
@@ -338,11 +295,11 @@ function load_angular(){
            }
         },true);
 
-        $scope.modify_image = function(){
-            console.log("modify_image");
-            $scope.$parent.file_box_canvas = [1];
-            window.setTimeout(add_canvas,250);
-        };
+        // $scope.modify_image = function(){
+        //     console.log("modify_image");
+        //     $scope.$parent.file_box_canvas = [1];
+        //     window.setTimeout(add_canvas,250);
+        // };
     });
 
     app.controller('new_file_bin_controller', function($http, $scope){
@@ -428,6 +385,26 @@ function load_angular(){
     app.controller("main_controller", function($http,$scope){
         $scope.main_show = true;
         $scope.temp_panel_show = false;
+        $scope.modify_image = function(){
+            console.log("modify_image");
+            $scope.main_show = false;
+            $scope.temp_panel_show = true;
+            $scope.empty_canvas = [];
+            $scope.image_canvas = [];
+            $scope.temp_canvas = [1];
+            window.setTimeout(add_canvas,250);
+
+            // $scope.$parent.file_box_canvas = [1];
+        };
+
+        $scope.return_main_panel = function(){
+            console.log("return main panel");
+            $scope.main_show = true;
+            $scope.temp_panel_show = false;
+            $scope.empty_canvas = [];
+            $scope.image_canvas = [];
+            $scope.temp_canvas = [];
+        };
     });
 
 }
