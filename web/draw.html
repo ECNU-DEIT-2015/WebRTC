@@ -27,8 +27,8 @@
         }
     </style>
 </head>
-<body >
-        <div id="navigator_div"></div>
+<body ng-app="draw_app">
+        <div ng-include="'navigator.html'" id="navigator_div" ></div> 
         <div id="icons" class="" hidden="true">
                 <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="-10 -10 68 68">
                 <title>title</title>
@@ -126,6 +126,8 @@
         <button id="only_video">only video</button>
         <!-- <button id="mini_video">mini video</button> -->
         <!-- <button id="recover">recover</button> -->
+
+        <script type="text/javascript" src="../js/draw_angular.js"></script>
 
         <script src="../lab/jquery.js"></script>
         <script src="../lab/excanvas.js"></script>
