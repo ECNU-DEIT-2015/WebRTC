@@ -12,3 +12,11 @@ app.controller('navigator_controller', function($scope, $http) {
         console.log("data changed");
     }, true);
 });
+
+app.directive('drawcanvas', function(){
+    return {
+        templateUrl: 'canvas.html',
+        replace: true,
+        restrict: 'AE',
+    }
+});
