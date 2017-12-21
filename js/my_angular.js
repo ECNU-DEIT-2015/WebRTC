@@ -385,16 +385,20 @@ function load_angular(){
     app.controller("main_controller", function($http,$scope){
         $scope.main_show = true;
         $scope.temp_panel_show = false;
-        $scope.modify_image = function(){
+        $scope.modify_image = function(imgsrc){
             console.log("modify_image");
             $scope.main_show = false;
             $scope.temp_panel_show = true;
             $scope.empty_canvas = [];
             $scope.image_canvas = [];
             $scope.temp_canvas = [1];
+            $scope.temp_save = true;
+            var img = document.createElement('IMG');
+            img.src = imgsrc;
             window.setTimeout(add_canvas,250);
-
-            // $scope.$parent.file_box_canvas = [1];
+            window.setTimeout(function(){
+                $("canvas:first").get(0).getContext('2d').drawImage(img,0,0);
+            },300);
         };
 
         $scope.return_main_panel = function(){
@@ -404,7 +408,12 @@ function load_angular(){
             $scope.empty_canvas = [];
             $scope.image_canvas = [];
             $scope.temp_canvas = [];
+            $scope.temp_save = false;
         };
+
+        $scope.save_canvas_file = function(){
+            console.log("save canvas file temp panel");
+        }
     });
 
 }
