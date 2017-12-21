@@ -30,39 +30,42 @@
     </head>
     <body ng-app="shouye_app">
             
-            <div ng-include="'navigator.html'" id="navigator_div" ></div> 
+        <div ng-include="'navigator.html'" id="navigator_div" ></div> 
         <!-- <div id="navigator_div" ></div> -->
-        <div class="tabbable" id="tabs-752432">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                     <a href="#new_file" data-toggle="tab">新建文件</a>
-                </li>
-                <li>
-                     <a href="#add_friend" data-toggle="tab">加好友</a>
-                </li>
-               <li>
-                    <a href="#personal_file" data-toggle="tab">个人文件</a>
-               </li>
-               <li>
-                    <a href="#cooperation_file" data-toggle="tab">协作文件</a>
-                </li>
-                <li >
-                    <a href="#bin" data-toggle="tab">回收站</a>
-                </li>
-            </ul>
-            
-            <div class="tab-content">
-                <div class="tab-pane active" id="new_file" ng-include="'new_file.html'">
+        <div ng-controller="main_controller">
+            <div class="tabbable" id="tabs-752432" ng-show="main_show">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                            <a href="#new_file" data-toggle="tab">新建文件</a>
+                    </li>
+                    <li>
+                            <a href="#add_friend" data-toggle="tab">加好友</a>
+                    </li>
+                    <li>
+                        <a href="#personal_file" data-toggle="tab">个人文件</a>
+                    </li>
+                    <li>
+                        <a href="#cooperation_file" data-toggle="tab">协作文件</a>
+                    </li>
+                    <li >
+                        <a href="#bin" data-toggle="tab">回收站</a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="new_file" ng-include="'new_file.html'">
+                    </div>
+                    <div class="tab-pane" id="add_friend" ng-include="'add_friend.html'">
+                    </div>
+                    <div class="tab-pane" id="personal_file" ng-include="'personal_file.html'">
+                    </div>
+                    <div class="tab-pane" id="cooperation_file" ng-include="'cooperation_file.html'">
+                    </div>
+                    <div class="tab-pane" id="bin" ng-include="'bin.html'">
+                    </div>
                 </div>
-                <div class="tab-pane" id="add_friend" ng-include="'add_friend.html'">
-                </div>
-                <div class="tab-pane" id="personal_file" ng-include="'personal_file.html'">
-                </div>
-                <div class="tab-pane" id="cooperation_file" ng-include="'cooperation_file.html'">
-                </div>
-                <div class="tab-pane" id="bin" ng-include="'bin.html'">
-                </div>
-            </div>
+            </div>  
+            <div ng-show="temp_panel_show"></div>
         </div>
     </body>
     <!-- <script src="../dartScript/navigator.dart.js"></script> -->

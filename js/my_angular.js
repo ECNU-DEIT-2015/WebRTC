@@ -425,7 +425,10 @@ function load_angular(){
         }
     });
     
-
+    app.controller("main_controller", function($http,$scope){
+        $scope.main_show = true;
+        $scope.temp_panel_show = false;
+    });
 
 }
 
