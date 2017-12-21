@@ -61,6 +61,14 @@ function load_angular(){
         }
     });
 
+    app.directive('friendbox', function(){
+        return {
+            templateUrl: 'friend_box.html',
+            replace: true,
+            restrict: 'AE',
+        }
+    });
+
     app.controller('new_file_controller', function($scope, $http){
         $scope.add_image_ = false;
         $scope.image_url_ = '';
@@ -209,7 +217,7 @@ function load_angular(){
        
         $scope.search_friend = [];
         console.log("add_friend_constroller");
-        $scope.$watch('friend_id', function(newValue,oldValue){
+        $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;
            }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){

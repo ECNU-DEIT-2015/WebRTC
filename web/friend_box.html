@@ -1,0 +1,62 @@
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <div class="row">
+            <div class="col-md-4" ng-repeat="person in search_friend" ng-hide="search_friend.length == 0">
+                <div class="thumbnail">
+                    <img alt="300x200" src="{{person['profile']}}" />
+                    <div class="caption">
+                        <h3>
+                            {{person['name']}}
+                        </h3>
+                        <p>
+                            {{person['qianming']}}
+                        </p>
+                        <p>
+                            <div class="row clearfix">
+                                <div class="col-md-2 column">
+                                    <a class="btn btn-primary" href="#">call</a>
+                                </div>
+                                <div class="col-md-3 column">
+                                    <a class="btn btn-default" href="#">发消息</a>
+                                </div>
+                                <div class="col-md-4 column">
+                                </div>
+                                <div class="col-md-3 column">
+                                        <a class="btn btn-danger" href="#">删除好友</a>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" ng-repeat="person in lasted_friend" ng-hide="search_friend.length != 0">
+                <div class="thumbnail">
+                    <img alt="300x200" src="{{person['profile']}}" />
+                    <div class="caption">
+                        <h3>
+                            {{person['name']}}
+                        </h3>
+                        <p>
+                            {{person['qianming']}}
+                        </p>
+                        <p>
+                            <div class="row clearfix">
+                                <div class="col-md-2 column">
+                                    <a class="btn btn-primary" href="#">call</a>
+                                </div>
+                                <div class="col-md-3 column">
+                                    <a class="btn btn-default" href="#">发消息</a>
+                                </div>
+                                <div class="col-md-4 column">
+                                </div>
+                                <div class="col-md-3 column">
+                                        <a class="btn btn-danger" href="#">删除好友</a>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
