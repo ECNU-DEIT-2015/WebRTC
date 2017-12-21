@@ -1,0 +1,65 @@
+<div >
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="row">
+                    <div class="col-md-4" ng-repeat="file in search_file" ng-hide="search_file.length == 0">
+                        <div class="thumbnail">
+                            <img alt="300x200" src="{{file['image']}}" />
+                            <div class="caption">
+                                <h3>
+                                    {{file['headline']}}
+                                </h3>
+                                <p>
+                                    {{file['introduction']}}
+                                </p><br>
+                                <div ng-hide="labels.length == 0">
+                                    <span ng-repeat="label in labels" class="badge pull-right">苹果</span>
+                                </div><br>
+                                <p>
+                                    <div class="row clearfix">
+                                        <div class="col-md-6 column">
+                                        </div>
+                                        <div class="col-md-3 column">
+                                                <a class="btn btn-default" href="#" >恢复</a>
+                                        </div>
+                                        <div class="col-md-3 column">
+                                                <a class="btn btn-danger" href="#">彻底删除</a>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-repeat="file in lasted_file" ng-hide="search_file.length != 0">
+                        <div class="thumbnail">
+                            <img alt="300x200" src="{{file['image']}}" />
+                            <div class="caption">
+                                <h3>
+                                    {{file['headline']}}
+                                </h3>
+                                <p>
+                                    {{file['introduction']}}
+                                </p><br>
+                                <div ng-hide="labels.length == 0">
+                                    <span ng-repeat="label in labels" class="badge pull-right">苹果</span>
+                                </div><br>
+                                <p>
+                                    <div class="row clearfix">
+                                        <div class="col-md-6 column">
+                                        </div>
+                                        <div class="col-md-3 column">
+                                                <a class="btn btn-default" href="#" >恢复</a>
+                                        </div>
+                                        <div class="col-md-3 column">
+                                                <a class="btn btn-danger" href="#">彻底删除</a>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
