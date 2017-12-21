@@ -45,6 +45,15 @@ function load_angular(){
         }
     });
 
+    app.directive('filebox', function(){
+        return {
+            templateUrl: 'file_box.html',
+            replace: true,
+            restrict: 'AE',
+        }
+    });
+
+
     app.controller('new_file_controller', function($scope, $http){
         $scope.add_image_ = false;
         $scope.image_url_ = '';
@@ -165,6 +174,10 @@ function load_angular(){
             }
             
         };
+
+        $scope.save_canvas_file = function(){
+            
+        }
     });
 
     app.controller('navigator_controller', function($scope, $http) {
@@ -249,6 +262,25 @@ function load_angular(){
                 $scope.search_file.pop()
             }
         }, true);
+    });
+
+
+    //测试filebox controller
+    app.controller("file_box_controller", function($http,$scope){
+        $scope.labels = [1,2,3,4];
+        $scope.search_file = []
+        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        $scope.$watch('old_search_value', function(newValue,oldValue){
+            if (newValue === oldValue) {
+                return;
+           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+               $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
+           }else{
+               $scope.old_search_file.pop()
+           }
+        },true);
     });
 }
 
