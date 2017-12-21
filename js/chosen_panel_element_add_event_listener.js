@@ -9,17 +9,17 @@ function add_new_file_event_listener(app){
         html_element({"id":"display_panel","file":"empty_panel.html"},add_canvas);
     });
 
-    document.getElementById("old_canvas").addEventListener("click",function(){
-        var this_node = document.getElementById("old_canvas");
-        var display_panel_node = document.getElementById("display_panel");
-        set_other_not_active(this_node);
-        this_node.className += " active";
-        remove_all_child(display_panel_node); 
+    // document.getElementById("old_canvas").addEventListener("click",function(){
+    //     var this_node = document.getElementById("old_canvas");
+    //     var display_panel_node = document.getElementById("display_panel");
+    //     set_other_not_active(this_node);
+    //     this_node.className += " active";
+    //     remove_all_child(display_panel_node); 
         
-        html_element({"id":"display_panel","file":"old_file_panel.html"},function(){
-            app.controller("old_file_panel_controller",function($scope){});
-        });
-    });
+    //     html_element({"id":"display_panel","file":"old_file_panel.html"},function(){
+    //         app.controller("old_file_panel_controller",function($scope){});
+    //     });
+    // });
 
     document.getElementById("image_canvas").addEventListener("click",function(){
         var this_node = document.getElementById("image_canvas");

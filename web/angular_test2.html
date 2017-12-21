@@ -1,23 +1,62 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="myapp">
   <head>
     <title>My AngularJS App</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <style type="text/css">
+        body{height:100%;}
+        a:link, a:visited{color:#333;text-decoration:none;}
+        .con1,.con2{position:relative;border:#ccc solid 1px;width:400px;height:400px;float:left;margin-right:5px;}
+        .con1{width:990px;height:500px;}
+        .handler1, .handler2{width:40px;height:400px;border:#ccc solid 1px;float:left;margin-right:25px;}
+        .handler1 a, .handler2 a{border-bottom:#ccc solid 1px;height:30px;line-height:30px;font-size:12px;display: block;text-align:center;}
+        .handler1 a.active, .handler2 a.active{background:#ddd;}
+        input{width:30px;}
+        .handler1 span, .handler2 span{width:10px;height:10px;margin:1px;display:block;border:#fff solid 1px;}
+        .handler1 span.active, .handler2 span.active{width:10px;height:10px;margin:1px;display:block;border-color:red;}
+
+        video {
+        object-fit:fill;
+        width: 300px;
+        height: 200px;
+        }
+    </style>
   </head>
+  <!-- ng-controller="jdk" -->
   <body >
         <hello></hello>
-        <input type="text" name="" id="" ng-model="good">
+        <input type="text" name="" id="ss" ng-model="good">
         {{good}}
   </body>
+  <script src="../js/chosen_panel_element_add_event_listener.js"></script>
+  <script src="../js/file_to_string.js"></script>
+  <script src="../js/canvas.js"></script>
   <script>
     var app = angular.module('myapp',[]);
-    app.directive('hello', function() {
+    // app.directive('hello', function() {
+    //     return {
+    //         restrict: 'AE',
+    //         template: 'canvas.html',
+    //         // templateUrl: 'canvas.html',
+    //         replace: true
+    //     };
+    // });
+    app.directive('hello', function(){
         return {
-            restrict: 'E',
-            template: '<div>Hi there</div>',
-            replace: true
-        };
+            templateUrl: 'canvas.html',
+            replace: true,
+            restrict: 'AE'
+        }
     });
-
+    // app.controller('jdk',function($scope){
+    //     var d = angular.element(document.getElementById('ss'));
+    //     console.log(d.width);
+        
+    // });
+    // window.setTimeout(add_canvas,2000);
   </script>
+  
 </html>

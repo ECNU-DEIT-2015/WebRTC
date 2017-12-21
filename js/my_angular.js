@@ -17,7 +17,84 @@ function all_hide_true(scope){
 
 function load_angular(){
     var app = angular.module('shouye_app', []);
+    app.directive("fileread", [function () {
+        return {
+            scope: {
+                fileread: "="
+            },
+            link: function (scope, element, attributes) {
+                element.bind("change", function (changeEvent) {
+                    var reader = new FileReader();
+                    reader.onload = function (loadEvent) {
+                        scope.$apply(function () {
+                            scope.fileread = loadEvent.target.result;
+                        });
+                    }
+                    reader.readAsDataURL(changeEvent.target.files[0]);
+                });
+            }
+        }
+    }]);
+
+
+    app.directive('drawcanvas', function(){
+        return {
+            templateUrl: 'canvas.html',
+            replace: true,
+            restrict: 'AE',
+            // scope: {},当你写上该属性时，就表示这个directive不会从它的controller里继承$scope对象，而是会重新创建一个。
+            // scope:{
+            //     'add_image' : '@',
+            //     'image_url' : ""
+            // },
+            link: function (scope, element, attributes) {
+                scope.$watch('add_image', function(newValue, oldValue){
+                    if(newValue ==  oldValue){
+                        return;
+                    }
+                    var canvas = angular.element(document.getElementsByTagName("canvas")[0]);
+                    var img = document.createElement("IMG");
+                    img.src = scope.image_url;
+                    console.log("add_image detected by drawcanvas link function");
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img,0,0);
+                    console.log(canvas[0]);
+                });
+            }
+        }
+    });
+
+    // app.directive("drawcanvas", function () {
+    //     return {
+    //         templateUrl: 'canvas.html',
+    //         replace: true,
+    //         restrict: 'AE'
+    //     }
+        
+    //     // return {
+    //     //     templateUrl: 'canvas.html',
+    //     //     replace: true ,
+    //     //     restrict: 'AE',
+    //     //     scope: {
+    //     //         add_image: false,
+    //     //         image_url: ""
+    //     //     },
+    //     //     link: function (scope, element, attributes) {
+    //     //         scope.$watch('add_image', function(newValue, oldValue){
+    //     //             var canvas = angular.element(document.getElementsByTagName("canvas")[0]);
+    //     //             var img = document.createElement("IMG");
+    //     //             img.src = scope.image_url;
+    //     //             var ctx = canvas.getContext('2d');
+    //     //             ctx.drawImage(img,0,0);
+    //     //         });
+    //     //     }
+    //     // }
+    // });
+
     app.controller('new_file_controller', function($scope, $http){
+        $scope.add_image_ = false;
+        $scope.image_url_ = '';
+
 
         $scope.empty_canvas = []
 
@@ -110,6 +187,57 @@ function load_angular(){
             $scope.bin_class = active;
             $scope.bin_panel_hide = false;
         }
+
+        $scope.image_canvas_click = function(){
+            console.log("image_canvas_click----------");
+            if($scope.image_file != undefined){
+                // console.log("iamge_canvas_click");
+                // $scope.image_select_hide = true;
+                // $scope.image_canvas = false;
+                // window.setTimeout(add_canvas,250);
+                // $scope.add_image_ = true;
+                // $scope.image_url_ = $scope.image_file;
+                // console.log(document.getElementsByTagName('canvas').length);
+                
+                
+                $scope.image_select_hide = true;
+                $scope.image_canvas = false;
+                window.setTimeout(add_canvas,250);
+                window.setTimeout(function(){
+                    var img = document.createElement('IMG');
+                    img.src = $scope.image_file;
+                    // console.log(img.src);
+                    // var i = angular.element(document.getElementById("wuqingze"));
+                    // console.log(i.attr("placeholder"));
+                    // var canvas = angular.element(document.getElementsByTagName('canvas'))[0];
+                    // console.log(angular.element(document.getElementById("hidden_input")).name);
+                    // console.log("con1 width:",$('.con1').width());
+                    // console.log("hidden input name",$("#hidden_input").name);
+                    // $("p").hide();
+                    // console.log($("canvas").length);
+                    // console.log($("canvas:first").width());
+                    // console.log($("canvas:first").get(0).getContext('2d'));
+                    // var canvas = document.getElementById("")
+                    // console.log('canvas length is: ',canvas.length);
+                    // console.log(canvas.getContext('2d'));
+                    // canvas.id = "jjjj";
+                    // var ctx = canvas.getContext('2d');
+                    window.setTimeout(function(){
+                        $("canvas:first").get(0).getContext('2d').drawImage(img,0,0);
+                    },500);
+                    // ctx.drawImage(img,0,0);
+                    console.log("draw successfully");
+                    // console.log(ctx);
+                    // // canvas.attr(getContext('2d')).attr(drawImage)(img,0,0);
+                    // // console.log($scope.image_file);
+                    console.log($("canvas:first").get(0).getContext('2d').getImageData(0,0,990,500).data);
+                    $scope.image_file = undefined;
+                    $scope.$apply();
+                },500);
+               
+            }
+            
+        };
     });
 
     app.controller('navigator_controller', function($scope, $http) {
