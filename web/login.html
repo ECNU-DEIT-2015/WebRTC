@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta charset="utf-8">
@@ -7,8 +6,10 @@
         <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     </head>
-    <body>
+    <body ng-app="login_app" ng-controller="main_controller">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -21,7 +22,7 @@
             </div>
         </nav>
 
-        <section class="row">
+        <!-- <section class="row">
             <div class="panel panel-default">
                 <h1 style="text-align: center;">免费在线作图，实时协作</h1>
                 <p style="text-align: center;">ProcessOn 支持流程图、思维导图、原型图、UML、网络拓扑图等</p>
@@ -42,10 +43,10 @@
                     <p style="text-align: center;">您可以把作品分享给团队成员或好友，无论何时何地大家都可以对作品进行编辑、阅读和评论</p>
                     <div style="text-align:center"><iframe width="819" height="462" src="https://www.youtube.com/embed/PEXnbTyygi4" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
                 </div>
-        </section>
+        </section> -->
 
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 模态框（Modal）登录 -->
+        <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="login_controller">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -57,17 +58,27 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" name="loginForm" novalidate>
                             <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail3" />
+                                    <input type="email" class="form-control" name="email" ng-model="email" required/>
+                                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                                            <span ng-show="loginForm.email.$error.required">邮箱是必须的。</span>
+                                            <span ng-show="loginForm.email.$error.email">非法的邮箱地址。</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group">
                                     <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword3" />
+                                    <input type="password" class="form-control" ng-model="password" ng-minlength="6" ng-maxlength="20" name="password" id="password" placeholder="请输入密码..." required />
+                                    <p>
+                                        <span style="color: red" ng-show="loginForm.password.$invalid">
+                                            <span ng-show="loginForm.password.$error.minlength">密码长度不小于6</span>
+                                            <span ng-show="loginForm.password.$error.maxlength">密码长度不超过20</span>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -79,17 +90,18 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">Sign in</button>
+                                        <button type="submit" class="btn btn-default" ng-disabled="loginForm.email.$invalid || loginForm.name.$invalid || loginForm.password.$invalid">Sign in</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
+                </div>
+            </div>
         </div>
     
-        <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 注册 -->
+        <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="register_controller">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -97,27 +109,42 @@
                             &times;
                         </button>
                         <h4 class="modal-title" id="myModalLabel">
-                            登录界面
+                            注册界面
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" name="registerForm" novalidate>
                             <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail3" />
+                                    <input type="email" class="form-control" name="email" ng-model="email" required/>
+                                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                                            <span ng-show="loginForm.email.$error.required">邮箱是必须的。</span>
+                                            <span ng-show="loginForm.email.$error.email">非法的邮箱地址。</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group">
                                     <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword3" />
+                                    <input type="password" class="form-control" ng-model="password" ng-minlength="6" ng-maxlength="20" name="password" id="password" placeholder="请输入密码..." required/> 
+                                    <p>
+                                        <span style="color: red" ng-show="registerForm.password.$invalid">
+                                            <span ng-show="registerForm.password.$error.minlength">密码长度不小于6</span>
+                                            <span ng-show="registerForm.password.$error.maxlength">密码长度不超过20</span>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword4" />
+                                    <input type="password" class="form-control" ng-model="passwordagain" name="passwordagain" id="passwordagain" placeholder="请再输一遍密码..." required/>
+                                    <p>
+                                        <span style="color: red" ng-show="registerForm.password.$valid">
+                                            <span ng-show="passwordagain!=password">*两次密码输入不一致</span>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,7 +156,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">Sign up</button>
+                                        <button type="submit" class="btn btn-default" ng-disabled="registerForm.email.$invalid || registerForm.name.$invalid || registerForm.password.$invalid || password != passwordagain">Sign up<span class="fa fa-arrow-right"></span></button>
                                 </div>
                             </div>
                         </form>
@@ -138,5 +165,22 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
+
     </body>
+    <script>
+            var app = angular.module('login_app', []);
+            app.controller('main_controller', function($scope,$http){
+
+            });
+
+            app.controller('login_controller', function($scope,$http){
+                $scope.user = 'John Doe';
+                $scope.email = 'john.doe@gmail.com';
+            });
+
+            app.controller('register_controller', function($scope, $http){
+
+            });
+
+    </script>
 </html>
