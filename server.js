@@ -60,11 +60,16 @@ var connectCounter = 0;
       console.log('message password', msg['password']);
       var connection = mysqlconnection();
       // var querysql = "select password from user where email='"+msg['email']+"';";
-      var querysql = "select password from user where email='nongxiaolang@foxmail.com';";
+      var querysql = "select * from user where email='"+msg['email']+"' and password='"+msg['password']+"'";
       connection.query(querysql,function(err, rows, fields) {    
         console.log("rows length", rows.length);
+        if(rows.length == 1){
+          socket.emit("return_login", true);
+        }else{
+          socket.emit("return_login", false);
+        }
       });
-      socket.emit("return_login", true);
+      
     });
 
 
