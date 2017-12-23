@@ -180,7 +180,7 @@
                     console.log(this.email);
                     console.log(this.password);
                     var socket = io.connect();
-                    socket.emit("login", [this.email,this.password]);
+                    socket.emit("login", {'email':this.email,'password':this.password});
                     socket.on('return_login', function(msg){
                         if(msg == true){
                             window.location.href = "/web/shouye.html";        

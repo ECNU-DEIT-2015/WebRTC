@@ -1,3 +1,4 @@
+
 'use strict';
 
 var os = require('os');
@@ -55,16 +56,26 @@ var connectCounter = 0;
 
     socket.on("login", function(msg){
       console.log('login message',msg);
+      var connection = mysqlconnection();
+      // var querysql = "select password from user where email='"+msg['email']+"';";
+      var querysql = "select password from user where email='nongxiaolang@foxmail.com';";
+      connection.query(querysql,function(err, rows, fields) {    
+        for(va)
+        console.log("rows length", rows);
+      });
       socket.emit("return_login", true);
     });
-    // convenience function to log server messages on the client
-  function log() {
-    var array = ['Message from server:'];
-    array.push.apply(array, arguments);
-    socket.emit('log', array);
-  }
 
-  socket.on('message', function(message) {
+
+
+// convenience function to log server messages on the client
+function log() {
+  var array = ['Message from server:'];
+  array.push.apply(array, arguments);
+  socket.emit('log', array);
+}
+
+socket.on('message', function(message) {
     log('Client said: ', message);
     // for a real app, would be room-only (not broadcast)
     socket.broadcast.emit('message', message);
@@ -118,6 +129,21 @@ var connectCounter = 0;
 http.listen(8080, function(){
     console.log('listening on *:8080');
   });
+
+
+function mysqlconnection(){
+    var mysql = require('mysql');
+    var connection = mysql.createConnection({
+        host: 'www.muedu.org',
+        user: 'deit-2015',
+        password: 'deit@2015!',
+        database:'project_2015_example'
+    });
+    connection.connect();
+    return connection;
+    // connection.end();
+}
+
 
 // // 创建服务器
 // http.createServer( function (request, response) {  

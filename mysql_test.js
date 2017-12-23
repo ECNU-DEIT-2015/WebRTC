@@ -10,19 +10,22 @@ var connection = mysql.createConnection({
     host: 'www.muedu.org',
     user: 'deit-2015',
     password: 'deit@2015!',
-    database:'project_2015_example'
+    database:'project_2015_5'
 });
 
 
 connection.connect();
 //查询
-// connection.query('SELECT * from student', function(err, rows, fields) {
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {    
+var querysql = "select password from user where email='nongxiaolang@foxmail.com'";
+// var querysql = 'SELECT * from student';
+connection.query(querysql, function(err, rows, fields) {
+// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {    
     if (err) throw err;
+    console.log(rows.length);
     console.log('The solution is: ', rows[0].solution);
-    // for(var row in rows){
-    //     console.log(rows[row]);
-    // }
+    for(var row in rows){
+        console.log(rows[row]);
+    }
     // console.log('查询结果为: ', rows);
 });
 //关闭连接
