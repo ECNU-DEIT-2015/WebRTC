@@ -29,7 +29,7 @@
         </style>
     </head>
     <body ng-app="shouye_app">
-        <button onclick="sendcookie()">send cookie</button>
+        <!-- <button onclick="sendcookie()">send cookie</button> -->
         <div ng-include="'navigator.html'" id="navigator_div" ></div> 
         <div ng-controller="main_controller">
             <div class="tabbable" id="tabs-752432" ng-show="main_show">
@@ -73,13 +73,15 @@
     <script src="../js/chosen_panel_element_add_event_listener.js"></script>
     <script src="../js/file_to_string.js"></script>
     <script src="../js/canvas.js"></script>
-    <script src="../js/my_angular.js"></script>
     <script src="/socket.io/socket.io.js"></script> 
+    <script src="../js/my_angular.js"></script>
+    
     <script>
-        function sendcookie(){
-            var socket = io.connect();        
-            socket.emit("test_cookie",{'cookie':document.cookie});
-        }
+        // function sendcookie(){
+        //     var socket = io.connect();        
+        //     socket.emit("test_cookie",{'cookie':document.cookie});
+        // }
+        var socket = io.connect(); 
         load_angular();
     </script>
     

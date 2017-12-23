@@ -201,11 +201,18 @@ function load_angular(){
         //         $scope.search_file.pop()
         //     }
         // }, true);
+        $scope.lasted_file = [];
         $scope.labels = [1,2,3,4];
-        $scope.search_file = []
-        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        $scope.search_file = [];
+        socket.on("personal_file", function(msg){
+            console.log('personal file form mysql',msg);
+            $scope.lasted_file = msg;    
+            $scope.$apply();
+        });
+        socket.emit("personal_file", {"good":"good"});
+        // $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
         $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;

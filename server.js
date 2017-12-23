@@ -71,15 +71,23 @@ var connectCounter = 0;
           socket.emit("return_login", false);
         }
       });
-      
+      connection.end();      
     });
 
-    socket.on("test_cookie", function(msg){
-      console.log(msg);
-      console.log(msg['cookie']);
-      console.log(login_user);
-      console.log(login_user[msg['cookie'].split(";")[0].trim()]);
+
+    socket.on("personal_file", function(msg){
+      var connection = mysqlconnection();
+      var querysql = "select * from personal_file where email='nongxiaolang@foxmail.com'";
+      connection.query(querysql, function(err, rows, fields) {
+        socket.emit("personal_file",rows);
+      });
     });
+    // socket.on("test_cookie", function(msg){
+    //   console.log(msg);
+    //   console.log(msg['cookie']);
+    //   console.log(login_user);
+    //   console.log(login_user[msg['cookie'].split(";")[0].trim()]);
+    // });
 
 
     // convenience function to log server messages on the client
