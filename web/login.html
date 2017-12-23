@@ -178,7 +178,8 @@
                 $scope.login = function(){
                     console.log(this.email);
                     console.log(this.password);
-                    $("#LoginModal").hide();
+                    var socket = io.connect();
+                    socket.emit("login", [this.email,this.password]);
                 };
             });
 

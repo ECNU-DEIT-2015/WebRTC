@@ -36,6 +36,9 @@ app.get('/', function(req, res){
   res.sendFile(__dirname+"/index.html");
 });
 
+app.get("/jj", function(req,res){
+  res.sendFile(__dirname+"/web/shouye.html");
+});
 var connectCounter = 0;
 // numClients
 // io.sockets.on("connection", function(socket){
@@ -47,6 +50,9 @@ var connectCounter = 0;
         socket.broadcast.emit("array_changed", msg);
     });
 
+    socket.on("login", function(msg){
+      
+    });
     // convenience function to log server messages on the client
   function log() {
     var array = ['Message from server:'];
