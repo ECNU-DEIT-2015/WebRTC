@@ -156,7 +156,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default" ng-disabled="registerForm.email.$invalid || registerForm.name.$invalid || registerForm.password.$invalid || password != passwordagain" data-dismiss="modal">Sign up<span class="fa fa-arrow-right"></span></button>
+                                        <button type="submit" class="btn btn-default" ng-disabled="registerForm.email.$invalid || registerForm.name.$invalid || registerForm.password.$invalid || password != passwordagain" data-dismiss="modal" ng-click="register">Sign up<span class="fa fa-arrow-right"></span></button>
                                 </div>
                             </div>
                         </form>
@@ -182,8 +182,15 @@
                     var socket = io.connect();
                     socket.emit("login", {'email':this.email,'password':this.password});
                     socket.on('return_login', function(msg){
-                        if(msg == true){
+                        console.log(msg);
+                        console.log(msg['verified']);
+                        console.log(msg['verified'] == true);
+                        console.log(msg['cookie']);
+                        if(msg['verified'] == true){
+                            document.cookie = msg['cookie'];
                             window.location.href = "/web/shouye.html";        
+                        }else{
+                            alert("用户不存在或密码不正确");
                         }
                     });
                     // window.location.href = "/web/shouye.html";

@@ -42,7 +42,7 @@ app.get("/jj", function(req,res){
 });
 
 
-
+var login_user = {};
 var connectCounter = 0;
 // numClients
 // io.sockets.on("connection", function(socket){
@@ -64,7 +64,9 @@ var connectCounter = 0;
       connection.query(querysql,function(err, rows, fields) {    
         console.log("rows length", rows.length);
         if(rows.length == 1){
-          socket.emit("return_login", true);
+          var cookie = Math.random().toString();
+          login_user[cookie.toString()] = msg['email'];
+          socket.emit("return_login", {"verified":true,"cookie":cookie});
         }else{
           socket.emit("return_login", false);
         }
@@ -72,69 +74,75 @@ var connectCounter = 0;
       
     });
 
+    socket.on("test_cookie", function(msg){
+      console.log(msg);
+      console.log(msg['cookie']);
+      console.log(login_user);
+      console.log(login_user[msg['cookie'].split(";")[0].trim()]);
+    });
 
 
-// convenience function to log server messages on the client
-function log() {
-  var array = ['Message from server:'];
-  array.push.apply(array, arguments);
-  socket.emit('log', array);
-}
-
-socket.on('message', function(message) {
-    log('Client said: ', message);
-    // for a real app, would be room-only (not broadcast)
-    socket.broadcast.emit('message', message);
-  });
-
-
-  socket.on('create or join', function(room) {
-    log('Received request to create or join room ' + room);
-
-    // var numClients = io.sockets.sockets.length;
-    var numClients = io.sockets.length;
-    log('Room ' + room + ' now has ' + connectCounter + ' client(s)');
-
-    if (connectCounter === 1) {
-      socket.join(room);
-      log('Client ID ' + socket.id + ' created room ' + room);
-      socket.emit('created', room, socket.id);
-
-    } else if (connectCounter < 10) {
-      log('Client ID ' + socket.id + ' joined room ' + room);
-      io.sockets.in(room).emit('join', room);
-      socket.join(room);
-      socket.emit('joined', room, socket.id);
-      io.sockets.in(room).emit('ready');
-    } else { // max two clients
-      socket.emit('full', room);
+    // convenience function to log server messages on the client
+    function log() {
+      var array = ['Message from server:'];
+      array.push.apply(array, arguments);
+      socket.emit('log', array);
     }
-  });
 
-  socket.on('ipaddr', function() {
-    var ifaces = os.networkInterfaces();
-    for (var dev in ifaces) {
-      ifaces[dev].forEach(function(details) {
-        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
-          socket.emit('ipaddr', details.address);
+    socket.on('message', function(message) {
+        log('Client said: ', message);
+        // for a real app, would be room-only (not broadcast)
+        socket.broadcast.emit('message', message);
+      });
+
+
+      socket.on('create or join', function(room) {
+        log('Received request to create or join room ' + room);
+
+        // var numClients = io.sockets.sockets.length;
+        var numClients = io.sockets.length;
+        log('Room ' + room + ' now has ' + connectCounter + ' client(s)');
+
+        if (connectCounter === 1) {
+          socket.join(room);
+          log('Client ID ' + socket.id + ' created room ' + room);
+          socket.emit('created', room, socket.id);
+
+        } else if (connectCounter < 10) {
+          log('Client ID ' + socket.id + ' joined room ' + room);
+          io.sockets.in(room).emit('join', room);
+          socket.join(room);
+          socket.emit('joined', room, socket.id);
+          io.sockets.in(room).emit('ready');
+        } else { // max two clients
+          socket.emit('full', room);
         }
       });
-    }
-  });
 
-  socket.on('bye', function(){
-    console.log('received bye');
-  });
+      socket.on('ipaddr', function() {
+        var ifaces = os.networkInterfaces();
+        for (var dev in ifaces) {
+          ifaces[dev].forEach(function(details) {
+            if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+              socket.emit('ipaddr', details.address);
+            }
+          });
+        }
+      });
 
-  socket.on('disconnect', function() {
-    connectCounter--;
-    console.log("disconnected",connectCounter);
+      socket.on('bye', function(){
+        console.log('received bye');
+      });
+
+      socket.on('disconnect', function() {
+        connectCounter--;
+        console.log("disconnected",connectCounter);
+        });
+    }); 
+
+  http.listen(8080, function(){
+      console.log('listening on *:8080');
     });
-}); 
-
-http.listen(8080, function(){
-    console.log('listening on *:8080');
-  });
 
 
 function mysqlconnection(){
