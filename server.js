@@ -56,12 +56,13 @@ var connectCounter = 0;
 
     socket.on("login", function(msg){
       console.log('login message',msg);
+      console.log('message email',msg['email']);
+      console.log('message password', msg['password']);
       var connection = mysqlconnection();
       // var querysql = "select password from user where email='"+msg['email']+"';";
       var querysql = "select password from user where email='nongxiaolang@foxmail.com';";
       connection.query(querysql,function(err, rows, fields) {    
-        for(va)
-        console.log("rows length", rows);
+        console.log("rows length", rows.length);
       });
       socket.emit("return_login", true);
     });
@@ -137,7 +138,7 @@ function mysqlconnection(){
         host: 'www.muedu.org',
         user: 'deit-2015',
         password: 'deit@2015!',
-        database:'project_2015_example'
+        database:'project_2015_5'
     });
     connection.connect();
     return connection;
