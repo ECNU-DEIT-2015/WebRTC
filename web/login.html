@@ -167,6 +167,7 @@
         </div>
 
     </body>
+    <script src="/socket.io/socket.io.js"></script> 
     <script>
             var app = angular.module('login_app', []);
             app.controller('main_controller', function($scope,$http){
@@ -180,6 +181,12 @@
                     console.log(this.password);
                     var socket = io.connect();
                     socket.emit("login", [this.email,this.password]);
+                    socket.on('return_login', function(msg){
+                        if(msg == true){
+                            window.location.href = "/web/shouye.html";        
+                        }
+                    });
+                    // window.location.href = "/web/shouye.html";
                 };
             });
 

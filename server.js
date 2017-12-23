@@ -39,19 +39,23 @@ app.get('/', function(req, res){
 app.get("/jj", function(req,res){
   res.sendFile(__dirname+"/web/shouye.html");
 });
+
+
+
 var connectCounter = 0;
 // numClients
 // io.sockets.on("connection", function(socket){
   io.on("connection", function(socket){
     connectCounter ++;
-    console.log(connectCounter);
+    console.log("connected user count",connectCounter);
     socket.on("array_changed", function(msg){
         console.log("array_changed");
         socket.broadcast.emit("array_changed", msg);
     });
 
     socket.on("login", function(msg){
-      
+      console.log('login message',msg);
+      socket.emit("return_login", true);
     });
     // convenience function to log server messages on the client
   function log() {
