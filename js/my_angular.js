@@ -132,13 +132,13 @@ function load_angular(){
                 $scope.empty_canvas = [];
                 $scope.image_select_hide = true;
                 $scope.image_canvas = [1];
-                window.setTimeout(add_canvas,100);
+                window.setTimeout(add_canvas,200);
                 window.setTimeout(function(){
                     var img = document.createElement('IMG');
                     img.src = $scope.image_file;
                     window.setTimeout(function(){
                         $("canvas:first").get(0).getContext('2d').drawImage(img,0,0);
-                    },100);
+                    },200);
                     console.log("draw successfully");
                     $scope.image_file = undefined;
                     $scope.$apply();
@@ -501,6 +501,21 @@ function load_angular(){
                 if(msg['result'] == true){ alert("新文件保存成功")}
             });
         }
+    });
+
+
+    app.controller("save_image_file_controller", function($http, $scope){
+        $scope.save_empty_file = function(){
+            var canvas = $("canvas:first").get(0);
+            // console.log(canvas.toDataURL());
+            socket.emit('save_empty_file',{"introduction":$scope.introduction,"headline":$scope.headline,"cookie":document.cookie,"imgData":canvas.toDataURL(),"labels":$scope.labels});
+            console.log("introduction",$scope.introduction);
+            console.log("headline",$scope.headline);
+            console.log("labels",$scope.labels);
+            socket.on("save_empty_file", function(msg){
+                if(msg['result'] == true){ alert("新文件保存成功")}
+            });
+        };
     });
 }
 
