@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-10 column" id="display_panel">
             
-            <drawcanvas ng-hide="empty_panel_hide" ng-repeat="canvas in empty_canvas"></drawcanvas>
+            <drawcanvas ng-hide="empty_panel_hide" ng-repeat="canvas in empty_canvas" ng-controller="empty_file_controller"></drawcanvas>
 
             <div ng-hide="old_file_panel_hide" ng-controller="old_file_controller">
                 <form class="navbar-form navbar-left" role="search">

@@ -45,19 +45,25 @@
                         <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3" />
+                                <input type="text" class="form-control" id="inputEmail3" ng-model="headline"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label" >添加标签</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="" ng-model="labels"/>
                             </div>
                         </div>
                         <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-2 control-label">描述</label>
                             <div class="col-sm-10">
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" rows="3" ng-model="introduction"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-default">保存</button>
-                                    <button type="submit" class="btn btn-default">取消</button>
+                                    <button type="submit" class="btn btn-default" data-dismiss="modal" ng-click="save_empty_file()">保存</button>
+                                    <button type="submit" class="btn btn-default" data-dismiss="modal">取消</button>
                             </div>
                         </div>
                     </form>
@@ -66,15 +72,15 @@
             </div><!-- /.modal-content -->
         </div>
         <div class="modal-dialog" ng-show="temp_save == true">
-                <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                    &times;
-                            </button>
-                            <h3 class="modal-title" id="myModalLabel" style="align-content: center">
-                                保存文件成功!
-                            </h3>
-                        </div>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                    </button>
+                    <h3 class="modal-title" id="myModalLabel" style="align-content: center">
+                        保存文件成功!
+                    </h3>
+                </div>
+            </div>
         </div>
 </div>

@@ -3,6 +3,7 @@
 
 var os = require('os');
 var nodeStatic = require('node-static');
+var fs = require('fs');
 // var http = require('http');
 // var socketIO = require('socket.io');
 
@@ -80,6 +81,62 @@ var connectCounter = 0;
       var querysql = "select * from personal_file where email='nongxiaolang@foxmail.com'";
       connection.query(querysql, function(err, rows, fields) {
         socket.emit("personal_file",rows);
+        connection.end();
+      });
+    });
+
+    socket.on("cooperation_file", function(msg){
+      var connection = mysqlconnection();
+      var querysql = "select * from cooperation_file where email='nongxiaolang@foxmail.com'";
+      connection.query(querysql, function(err, rows, fields) {
+        socket.emit("cooperation_file",rows);
+        connection.end();
+      });
+    });
+
+    socket.on("bin_file", function(msg){
+      var connection = mysqlconnection();
+      var querysql = "select * from bin_file where email='nongxiaolang@foxmail.com'";
+      connection.query(querysql, function(err, rows, fields) {
+        socket.emit("bin_file",rows);
+        connection.end();
+      });
+    });
+
+    socket.on("new_bin_file", function(msg){
+      var connection = mysqlconnection();
+      var querysql = "select * from bin_file where email='nongxiaolang@foxmail.com'";
+      connection.query(querysql, function(err, rows, fields) {
+        socket.emit("new_bin_file",rows);
+        connection.end();
+      });
+    });
+
+    socket.on("friend_file", function(msg){
+
+      var cookie = msg['cookie'].split(';')[0];
+      var user = login_user[cookie];
+      var querysql = "select * from user where email in (select friend_email from friend where email='"+user+"')";
+      var connection = mysqlconnection();
+      console.log("msg['cookie']",msg['cookie'].split(";")[0]);
+      console.log('friend file cookie', cookie, login_user[cookie]);
+      connection.query(querysql, function(err, rows, fields) {
+        socket.emit("friend_file",rows);
+        connection.end();
+      });
+    });
+
+    socket.on("save_empty_file", function(msg){
+      var imgData = msg['imgData'];
+      var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+      var dataBuffer = new Buffer(base64Data, 'base64');
+      fs.writeFile("image.png", dataBuffer, function(err) {
+        if(err){
+          socket.emit("save_empty_file",{"result":false});
+        }else{
+          socket.emit("save_empty_file",{"result":true});
+          console.log("save successfully");
+        }
       });
     });
     // socket.on("test_cookie", function(msg){

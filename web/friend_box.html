@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4" ng-repeat="person in search_friend" ng-hide="search_friend.length == 0">
                 <div class="thumbnail">
-                    <img alt="300x200" src="{{person['profile']}}" />
+                    <img alt="300x200" src="{{person['imageurl']}}" />
                     <div class="caption">
                         <h3>
                             {{person['name']}}
@@ -31,7 +31,7 @@
             </div>
             <div class="col-md-4" ng-repeat="person in lasted_friend" ng-hide="search_friend.length != 0">
                 <div class="thumbnail">
-                    <img alt="300x200" src="{{person['profile']}}" />
+                    <img alt="300x200" src="{{person['imageurl']}}" />
                     <div class="caption">
                         <h3>
                             {{person['name']}}

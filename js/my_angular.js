@@ -168,9 +168,16 @@ function load_angular(){
     });
     
     app.controller('add_friend_controller', function($http,$scope){
-        $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
-            {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
-            {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
+        socket.on("friend_file", function(msg){
+            console.log('friend message',msg);
+            $scope.lasted_friend = msg;    
+            $scope.$apply();
+        });
+        socket.emit("friend_file", {"cookie":document.cookie});
+
+        // $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
+        //     {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
+        //     {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
        
         $scope.search_friend = [];
         console.log("add_friend_constroller");
@@ -205,11 +212,23 @@ function load_angular(){
         $scope.labels = [1,2,3,4];
         $scope.search_file = [];
         socket.on("personal_file", function(msg){
-            console.log('personal file form mysql',msg);
+            // console.log('personal file form mysql',msg);
+            // 将labels转成数组
+            for(var i=0; i<msg.length; i++){
+                console.log(msg[i]['labels'].toString().split(" "));
+                var labels = msg[i]['labels'].split(' ');
+                msg[i]['labels'] = labels;
+                console.log(labels);
+            }
+            
             $scope.lasted_file = msg;    
+            // console.log(msg[0][''])
+            // $scope.labels = msg[0]['labels'].split(' ');
+            console.log('personal file form mysql',msg);
             $scope.$apply();
         });
-        socket.emit("personal_file", {"good":"good"});
+        socket.emit("personal_file", {"cookie": document.cookie});
+        
         // $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
         // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
         // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
@@ -247,11 +266,22 @@ function load_angular(){
         //     }
         // }, true);
 
-        $scope.labels = [1,2,3,4];
+        // $scope.labels = [1,2,3,4];
         $scope.search_file = []
-        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+        socket.on("cooperation_file", function(msg){
+            for(var i=0; i<msg.length; i++){
+                console.log(msg[i]['labels'].toString().split(" "));
+                var labels = msg[i]['labels'].split(' ');
+                msg[i]['labels'] = labels;
+                console.log(labels);
+            }
+            $scope.lasted_file = msg;    
+            $scope.$apply();
+        });
+        socket.emit("cooperation_file", {"cookie":document.cookie});
+        // $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
         $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;
@@ -272,9 +302,23 @@ function load_angular(){
     app.controller('bin_controller', function($http,$scope){
         $scope.labels = [1,2,3,4];
         $scope.search_file = []
-        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+
+        socket.on("bin_file", function(msg){
+            for(var i=0; i<msg.length; i++){
+                console.log(msg[i]['labels'].toString().split(" "));
+                console.log("bin_controller");
+                var labels = msg[i]['labels'].split(' ');
+                msg[i]['labels'] = labels;
+                console.log(labels);
+            }
+            $scope.lasted_file = msg;    
+            $scope.$apply();
+        });
+        socket.emit("bin_file", {"cookie":document.cookie});
+
+        // $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+        // {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
         $scope.$watch('search_value', function(newValue,oldValue){
             if (newValue === oldValue) {
                 return;
@@ -311,7 +355,19 @@ function load_angular(){
 
     app.controller('new_file_bin_controller', function($http, $scope){
         $scope.labels = [1,2,3,4];
-        $scope.search_file = []
+        $scope.search_file = [];
+        socket.on("new_bin_file", function(msg){
+            for(var i=0; i<msg.length; i++){
+                var labels = msg[i]['labels'].split(' ');
+                msg[i]['labels'] = labels;
+                console.log(labels);
+            }
+            $scope.lasted_file = msg;   
+            console.log('new_file_bin_controller',msg);
+            $scope.$apply();
+        });
+        socket.emit("new_bin_file", {"cookie":document.cookie});
+
         $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
         {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
         {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
@@ -327,9 +383,18 @@ function load_angular(){
     });
 
     app.controller('friend_controller', function($http, $scope){
-        $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
-            {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
-            {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
+
+
+        socket.on("friend_file", function(msg){
+            console.log('friend message',msg);
+            $scope.lasted_friend = msg;    
+            $scope.$apply();
+        });
+        socket.emit("friend_file", {"cookie":document.cookie});
+
+        // $scope.lasted_friend = [{'name':'wu','qianming':'be honest','profile':'../images/u_01.png'},
+        //     {'name':'qing','qianming':'be honest','profile':'../images/u_02.png'},
+        //     {'name':'ze','qianming':'be honest','profile':'../images/u_03.png'}];
        
         $scope.search_friend = [];
         console.log("add_friend_constroller");
@@ -337,7 +402,7 @@ function load_angular(){
             if (newValue === oldValue) {
                 return;
            }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-               $scope.search_friend.push({'name':'ze','qianming':'be honest','profile':'../images/u_03.png'});
+               $scope.search_friend.push({'name':'ze','qianming':'be honest','imageurl':'../images/u_03.png'});
            }else{
                $scope.search_friend.pop()
            }
@@ -423,6 +488,17 @@ function load_angular(){
         }
     });
 
+    app.controller("empty_file_controller", function($http, $scope){
+        $scope.save_empty_file = function(){
+            console.log("save empty file",$scope.introduction);
+            var canvas = $("canvas:first").get(0);
+            // console.log(canvas.toDataURL());
+            socket.emit('save_empty_file',{"introduction":$scope.introduction,"headline":$scope.headline,"cookie":document.cookie,"imgData":canvas.toDataURL(),labels:$scope.labels});
+            socket.on("save_empty_file", function(msg){
+                if(msg['result'] == true){ alert("新文件保存成功")}
+            });
+        }
+    });
 }
 
 

@@ -12,8 +12,8 @@
                                 <p>
                                     {{file['introduction']}}
                                 </p><br>
-                                <div ng-hide="labels.length == 0">
-                                    <span ng-repeat="label in labels" class="badge pull-right">苹果</span>
+                                <div ng-hide="file['labels'].length == 0">
+                                    <span ng-repeat="label in file['labels']" class="badge pull-right">{{label}}</span>
                                 </div><br>
                                 <p>
                                     <div class="row clearfix">
@@ -40,8 +40,8 @@
                                 <p>
                                     {{file['introduction']}}
                                 </p><br>
-                                <div ng-hide="labels.length == 0">
-                                    <span ng-repeat="label in labels" class="badge pull-right">苹果</span>
+                                <div ng-hide="file['labels'].length == 0">
+                                    <span ng-repeat="label in file['labels']" class="badge pull-right">{{label}}</span>
                                 </div><br>
                                 <p>
                                     <div class="row clearfix">
