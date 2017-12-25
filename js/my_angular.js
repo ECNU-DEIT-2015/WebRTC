@@ -292,11 +292,11 @@ function load_angular(){
            }
         },true);
 
-        $scope.modify_image = function(){
-            console.log("modify_image");
-            $scope.$parent.file_box_canvas = [1];
-            window.setTimeout(add_canvas,250);
-        };
+        // $scope.modify_image = function(){
+        //     console.log("modify_image");
+        //     $scope.$parent.file_box_canvas = [1];
+        //     window.setTimeout(add_canvas,250);
+        // };
     });
 
     app.controller('bin_controller', function($http,$scope){
@@ -408,29 +408,30 @@ function load_angular(){
            }
         },true);
     });
+   
     //测试filebox controller
-    app.controller("file_box_controller", function($http,$scope){
-        $scope.labels = [1,2,3,4];
-        $scope.search_file = []
-        $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
-        {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
-        $scope.$watch('old_search_value', function(newValue,oldValue){
-            if (newValue === oldValue) {
-                return;
-           }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-               $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
-           }else{
-               $scope.old_search_file.pop()
-           }
-        },true);
+    // app.controller("file_box_controller", function($http,$scope){
+    //     $scope.labels = [1,2,3,4];
+    //     $scope.search_file = []
+    //     $scope.lasted_file = [{"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/1.png"},
+    //     {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/2.png"},
+    //     {"headline":"老年","introduction":"架飞机阿咖酚散放辣椒发了卡机发","image":"../images/3.png"}];
+    //     $scope.$watch('old_search_value', function(newValue,oldValue){
+    //         if (newValue === oldValue) {
+    //             return;
+    //        }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+    //            $scope.old_search_file.push({'h':'ze','p':'be honest','img':'../images/u_03.png'});
+    //        }else{
+    //            $scope.old_search_file.pop()
+    //        }
+    //     },true);
 
-        $scope.modify_image = function(){
-            console.log("modify_image");
-            $scope.$parent.file_box_canvas = [1];
-            window.setTimeout(add_canvas,250);
-        };
-    });
+    //     $scope.modify_image = function(){
+    //         console.log("modify_image");
+    //         $scope.$parent.file_box_canvas = [1];
+    //         window.setTimeout(add_canvas,250);
+    //     };
+    // });
 
     app.controller("file_box_controller_01", function($http,$scope){
         $scope.labels = [1,2,3,4,9];
@@ -457,8 +458,11 @@ function load_angular(){
     app.controller("main_controller", function($http,$scope){
         $scope.main_show = true;
         $scope.temp_panel_show = false;
+        $scope.imagepath = '';
         $scope.modify_image = function(imgsrc){
             console.log("modify_image");
+            // console.log("imgsrc", imgsrc[1].src);
+            $scope.imagepath = imgsrc;
             $scope.main_show = false;
             $scope.temp_panel_show = true;
             $scope.empty_canvas = [];
@@ -470,6 +474,15 @@ function load_angular(){
             window.setTimeout(add_canvas,250);
             window.setTimeout(function(){
                 $("canvas:first").get(0).getContext('2d').drawImage(img,0,0);
+                $("#save_file_model").get(0).id = "xxx";
+                // $(".save")[0].data-toggle = "";
+                // $(".save")[0].data-target = "";
+                // var modal = $("#save_file_model");
+                // modal.parentNode.removeChild(modal);
+                // var modal1 = $(".modal-dialog");
+                // for(var i=0;i<modal1.length; i++){
+                //     modal1[i].parentNode.removeChild(modal1[i]);
+                // }
             },300);
         };
 
@@ -481,11 +494,22 @@ function load_angular(){
             $scope.image_canvas = [];
             $scope.temp_canvas = [];
             $scope.temp_save = false;
+            window.location.reload();
         };
 
         $scope.save_canvas_file = function(){
-            console.log("save canvas file temp panel");
+            socket.emit("modify_image",{"imagepath":$scope.imagepath,"imagedata":$("canvas:first").get(0).toDataURL()});
+            socket.on("modify_image", function(msg){
+                if(msg['result'] == true){
+                    alert("更新图片成功！");
+                }else{
+                    alert("更新图片失败");
+                }
+            });
+            console.log("save canvas file temp panel~~~~~~~~");
         }
+
+
     });
 
     app.controller("empty_file_controller", function($http, $scope){

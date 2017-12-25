@@ -159,6 +159,22 @@ var connectCounter = 0;
 
 
     });
+
+
+    socket.on("modify_image", function(msg){
+      var imagepath = msg['imagepath'].split("../")[1];
+      var imgData = msg['imagedata'];
+      var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+      var dataBuffer = new Buffer(base64Data, 'base64');
+      fs.writeFile(imagepath, dataBuffer, function(err) {
+        if(err){
+          socket.emit("modify_image",{"result":false});
+        }else{
+          socket.emit("modify_image",{"result":true});
+          console.log("save successfully");
+        }
+      });
+    });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);
     //   console.log(msg['cookie']);
