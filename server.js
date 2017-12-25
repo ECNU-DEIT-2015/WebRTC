@@ -141,7 +141,7 @@ var connectCounter = 0;
 
       connection.query(querysql, function(err, rows, fields) {
         var count = rows[0]['count(*)'];
-        var imagepath = "images/"+email+"/"+(count+1).toString()+".png";
+        var imagepath = "images/"+email+"/personal_file/"+(count+1).toString()+".png";
         var headline = msg['headline'];
         var introduction = msg['introduction'];
         var labels = msg['labels'];
@@ -157,7 +157,7 @@ var connectCounter = 0;
         });
       });
 
-      
+
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);
