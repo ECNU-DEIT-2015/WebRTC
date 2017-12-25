@@ -1,4 +1,7 @@
 
+
+
+
 'use strict';
 
 var os = require('os');
@@ -174,6 +177,55 @@ var connectCounter = 0;
           console.log("save successfully");
         }
       });
+    });
+
+    socket.on("delete_file_bin", function(msg){
+      var table = msg['table'];
+      var image = msg['image'];
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
+
+      var querysql = "select * from "+table+" where image='"+image+"'";
+      var querysql1 = "delete from "+table+" where image='"+image+"'";
+      console.log("querysql",querysql);
+      console.log("querysql1",querysql1);
+      var querysql2 = "insert into bin_file(bin_file_id,email,image,headline,introduction,labels) value(?,?,?,?,?,?)";
+      var connection = mysqlconnection();
+      connection.query("SET SQL_SAFE_UPDATES = 0", function(err, result){
+        if(err){
+          console("SET SQL_SAFE_UPDATES = 0; failed");
+        }else{
+          connection.query(querysql, function(err, rows, fields) {
+            var row = rows[0];
+            var bin_file_id;
+            if(table == "personal_file"){
+              bin_file_id = row['personal_file_id'];
+            }else{
+              bin_file_id = row['cooperation_file_id'];
+            }
+            var headline = row['headline'];
+            var introduction = row['introduction'];
+            var labels = row['labels'];
+            connection.query(querysql2, [bin_file_id,email,image,headline,introduction,labels], function(err, result){
+              if(err){
+                console.log("insert into bin failed");
+                socket.emit("delete_file_bin",{"result":false});
+                connection.end();
+              }else{
+                connection.query(querysql1,function(err,result){
+                  if(err){
+                    socket.emit("delete_file_bin",{"result":false});
+                  }else{
+                    socket.emit("delete_file_bin",{"result":true});
+                  }
+                  connection.end();
+                });
+              }
+            });
+        });
+        }
+      });
+      
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);

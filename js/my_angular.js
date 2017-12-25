@@ -507,8 +507,25 @@ function load_angular(){
                 }
             });
             console.log("save canvas file temp panel~~~~~~~~");
-        }
+        };
 
+        $scope.delete_file_bin = function(image){
+            // ../images/nongxiaolang@foxmail.com/personal_file/3.png
+            // delete_button.hidden = true;
+            // $($event.target).addClass("checked");  
+            // console.log("delete");
+            // alert("delete");
+            var table = image.split("/")[image.split("/").length-2];
+            socket.emit("delete_file_bin",{"table":table,"image":image,"cookie":document.cookie});
+            socket.on("delete_file_bin", function(msg){
+                if(msg["result"] == true){
+                    alert("删除成功！");
+                }else{
+                    alert("删除失败！");
+                }
+            });
+            
+        };
 
     });
 

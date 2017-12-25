@@ -25,14 +25,14 @@
                                             <a class="btn btn-primary" href="#">call friend</a>
                                     </div>
                                     <div class="col-md-3 column">
-                                            <a class="btn btn-danger" href="#">删除</a>
+                                            <a class="btn btn-danger" href="#" ng-click="delete_file_bin()">删除</a>
                                     </div>
                                 </div>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" ng-repeat="file in lasted_file" ng-hide="search_file.length != 0">
+                <div class="col-md-4" ng-repeat="file in lasted_file" ng-hide="search_file.length != 0" ng-show="show_this" ng-init="show_this = true">
                     <div class="thumbnail">
                         <img alt="300x200" src="{{file['image']}}" />
                         <div class="caption">
@@ -55,7 +55,7 @@
                                             <a class="btn btn-primary" href="#">call friend</a>
                                     </div>
                                     <div class="col-md-3 column">
-                                            <a class="btn btn-danger" href="#">删除</a>
+                                            <a class="btn btn-danger" href="#" ng-click="show_this=false;delete_file_bin(file['image']);">删除</a>
                                     </div>
                                 </div>
                             </p>
