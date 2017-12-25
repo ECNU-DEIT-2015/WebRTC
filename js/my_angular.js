@@ -493,7 +493,10 @@ function load_angular(){
             console.log("save empty file",$scope.introduction);
             var canvas = $("canvas:first").get(0);
             // console.log(canvas.toDataURL());
-            socket.emit('save_empty_file',{"introduction":$scope.introduction,"headline":$scope.headline,"cookie":document.cookie,"imgData":canvas.toDataURL(),labels:$scope.labels});
+            socket.emit('save_empty_file',{"introduction":$scope.introduction,"headline":$scope.headline,"cookie":document.cookie,"imgData":canvas.toDataURL(),"labels":$scope.labels});
+            console.log("introduction",$scope.introduction);
+            console.log("headline",$scope.headline);
+            console.log("labels",$scope.labels);
             socket.on("save_empty_file", function(msg){
                 if(msg['result'] == true){ alert("新文件保存成功")}
             });

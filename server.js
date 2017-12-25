@@ -130,14 +130,34 @@ var connectCounter = 0;
       var imgData = msg['imgData'];
       var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
       var dataBuffer = new Buffer(base64Data, 'base64');
-      fs.writeFile("image.png", dataBuffer, function(err) {
-        if(err){
-          socket.emit("save_empty_file",{"result":false});
-        }else{
-          socket.emit("save_empty_file",{"result":true});
-          console.log("save successfully");
-        }
+      
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
+
+      
+      var querysql = "select count(*) from personal_file where email='"+email+"'";
+      var querysql1 = "insert into personal_file(email, personal_file_id, image, headline, introduction, labels) value(?,?,?,?,?,?)";
+      var connection = mysqlconnection();
+
+      connection.query(querysql, function(err, rows, fields) {
+        var count = rows[0]['count(*)'];
+        var imagepath = "images/"+email+"/"+(count+1).toString()+".png";
+        var headline = msg['headline'];
+        var introduction = msg['introduction'];
+        var labels = msg['labels'];
+        connection.query(querysql1,[email, email+(count+1).toString(),"../"+imagepath, headline, introduction, labels], function(err, result){
+          fs.writeFile(imagepath, dataBuffer, function(err) {
+            if(err){
+              socket.emit("save_empty_file",{"result":false});
+            }else{
+              socket.emit("save_empty_file",{"result":true});
+              console.log("save successfully");
+            }
+          });
+        });
       });
+
+      
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);
