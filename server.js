@@ -1,7 +1,6 @@
 
 
 
-
 'use strict';
 
 var os = require('os');
@@ -208,6 +207,7 @@ var connectCounter = 0;
             var labels = row['labels'];
             connection.query(querysql2, [bin_file_id,email,image,headline,introduction,labels], function(err, result){
               if(err){
+                console.log("bin_file_id,email,image,headline,introduction,labels",bin_file_id,email,image,headline,introduction,labels);
                 console.log("insert into bin failed");
                 socket.emit("delete_file_bin",{"result":false});
                 connection.end();
@@ -226,6 +226,72 @@ var connectCounter = 0;
         }
       });
       
+    });
+
+    socket.on("recover", function(msg){
+      var table = msg['table'];
+      var image = msg['image'];
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
+
+      var querysql = "select * from bin_file where image='"+image+"'";
+      var querysql1;
+      if(table=="personal_file"){
+        querysql1 = "insert into personal_file(personal_file_id,email,image,headline,introduction,labels) value(?,?,?,?,?,?)";
+      }else{
+        querysql1 = "insert into cooperation_file(cooperation_file_id,email,image,headline,introduction,labels) value(?,?,?,?,?,?)";
+      }
+      var querysql2 = "delete from bin_file where image='"+image+"'";
+
+      var connection = mysqlconnection();
+      connection.query(querysql, function(err, rows, fields){
+        if(err){
+          console.log("querysql failed");
+          socket.emit("recover",{"result":false});
+        }else{
+          var row = rows[0];
+          var file_id = row['bin_file_id'];
+          var email = row['email'];
+          var image = row['image'];
+          var headline = row['headline'];
+          var introduction = row['introduction'];
+          var labels = row['labels'];
+          connection.query(querysql1,[file_id, email, image, headline, introduction, labels], function(err, result){
+            if(err){
+              socket.emit("recover",{"result":false});
+              connection.end();
+            }else{
+              console.log("querysql1 insert in to personal file success");
+              connection.query(querysql2,function(err, result){
+                if(err){
+                  socket.emit("recover",{"result":false});
+                }else{
+                  socket.emit("recover",{"result":true});
+                }
+              });
+              connection.end();
+            }
+          });
+        }
+      });
+    });
+
+    socket.on("totally_delete", function(msg){
+      var image = msg['image'];
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
+
+
+      var querysql = "delete from bin_file where image='"+image+"'";
+      var connection = mysqlconnection();
+      connection.query(querysql, function(err, result){
+        if(err){
+          socket.emit("totally_delete",{"result":false});
+        }else{
+          socket.emit("totally_delete",{"result":true});
+        }
+      });
+      connection.end();
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);

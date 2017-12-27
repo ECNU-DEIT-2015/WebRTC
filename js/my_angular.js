@@ -1,3 +1,4 @@
+
 var not_active = 'list-group-item';
 var active = 'list-group-item active';
 
@@ -519,6 +520,7 @@ function load_angular(){
             socket.emit("delete_file_bin",{"table":table,"image":image,"cookie":document.cookie});
             socket.on("delete_file_bin", function(msg){
                 if(msg["result"] == true){
+                    socket.emit("bin_file", {"cookie":document.cookie});
                     alert("删除成功！");
                 }else{
                     alert("删除失败！");
@@ -527,6 +529,30 @@ function load_angular(){
             
         };
 
+        $scope.recover = function(image){
+            var table = image.split("/")[image.split("/").length-2];
+            socket.emit("recover",{"table":table,"image":image,"cookie":document.cookie});
+            socket.on("recover", function(msg){
+                if(msg['result']=true){
+                    alert("恢复成功");
+                }else{
+                    alert("恢复失败");
+                }
+            });
+        }
+
+        $scope.totally_delete = function(image){
+            socket.emit("totally_delete",{"image":image,"cookie":document.cookie});
+            socket.on("totally_delete", function(msg){
+                if(msg["result"] == true){
+                    socket.emit("bin_file", {"cookie":document.cookie});
+                    alert("删除成功！");
+                    // window.setTimeout(function(){alert("删除成功！");},1000); 
+                }else{
+                    alert("删除失败！");
+                }
+            });
+        }
     });
 
     app.controller("empty_file_controller", function($http, $scope){
