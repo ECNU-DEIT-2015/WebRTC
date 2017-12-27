@@ -457,11 +457,14 @@ function load_angular(){
     });
     
     app.controller("main_controller", function($http,$scope){
+        $scope.temp_image = "";
+
         $scope.main_show = true;
         $scope.temp_panel_show = false;
         $scope.imagepath = '';
         $scope.modify_image = function(imgsrc){
             console.log("modify_image");
+            $scope.temp_image = imgsrc;
             // console.log("imgsrc", imgsrc[1].src);
             $scope.imagepath = imgsrc;
             $scope.main_show = false;
@@ -488,6 +491,11 @@ function load_angular(){
         };
 
         $scope.return_main_panel = function(){
+            $("img").each(function(){
+                if($(this).attr("id") == $scope.temp_image){
+                    $(this).attr("src", $scope.temp_image+"?rnd="+Math.random().toString());
+                }
+            });
             console.log("return main panel");
             $scope.main_show = true;
             $scope.temp_panel_show = false;
@@ -495,7 +503,6 @@ function load_angular(){
             $scope.image_canvas = [];
             $scope.temp_canvas = [];
             $scope.temp_save = false;
-            window.location.reload();
         };
 
         $scope.save_canvas_file = function(){
@@ -520,6 +527,8 @@ function load_angular(){
             socket.emit("delete_file_bin",{"table":table,"image":image,"cookie":document.cookie});
             socket.on("delete_file_bin", function(msg){
                 if(msg["result"] == true){
+                    socket.emit("personal_file", {"cookie": document.cookie});
+                    socket.emit("cooperation_file", {"cookie":document.cookie});
                     socket.emit("bin_file", {"cookie":document.cookie});
                     alert("删除成功！");
                 }else{
@@ -534,6 +543,8 @@ function load_angular(){
             socket.emit("recover",{"table":table,"image":image,"cookie":document.cookie});
             socket.on("recover", function(msg){
                 if(msg['result']=true){
+                    socket.emit("bin_file", {"cookie":document.cookie});
+                    socket.emit("cooperation_file", {"cookie":document.cookie});
                     alert("恢复成功");
                 }else{
                     alert("恢复失败");
