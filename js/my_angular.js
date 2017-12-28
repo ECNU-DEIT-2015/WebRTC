@@ -544,6 +544,7 @@ function load_angular(){
             socket.on("recover", function(msg){
                 if(msg['result']=true){
                     socket.emit("bin_file", {"cookie":document.cookie});
+                    socket.emit("personal_file", {"cookie": document.cookie});
                     socket.emit("cooperation_file", {"cookie":document.cookie});
                     alert("恢复成功");
                 }else{
