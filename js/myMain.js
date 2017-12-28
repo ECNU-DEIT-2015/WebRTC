@@ -1,13 +1,11 @@
-
-$(function () {
-
+function update_canvas(socket){
     console.log("mymain.js");
     var canvas = document.getElementsByTagName('canvas')[0];
     canvas.id = "main_canvas";
     var ctx = canvas.getContext('2d');
     var canvas_imagedata = ctx.getImageData(0,0,990,500);
     var array_data = new Uint8ClampedArray(canvas_imagedata.data);
-    var socket = io.connect();
+    // var socket = io.connect();
 
     if(window.Worker){
 
@@ -42,6 +40,11 @@ $(function () {
             console.log("success");
         });
     }
+}
+$(function () {
+    var socket = io.connect();
+    window.setTimeout(update_canvas(socket),3000);
+
 
     var isChannelReady = false;
     var isInitiator = false;
