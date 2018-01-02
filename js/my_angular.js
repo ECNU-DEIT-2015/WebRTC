@@ -1,6 +1,9 @@
 
 var not_active = 'list-group-item';
 var active = 'list-group-item active';
+var tempimage = '';
+
+
 
 function all_hide_true(scope){
     scope.empty_panel_hide = true;
@@ -574,14 +577,18 @@ function load_angular(){
             });
         }
 
-        $scope.call_friend = function(image){
-            // window.location.href = "/web/draw.html";
-            // socket.emit("call_friend", {"image":image,"cookie":document.cookie});
-        }
+        $scope.search_friend = function(image){
+            tempimage = image;
+        };
+        // $scope.call_friend = function(image){
+        //     // window.location.href = "/web/draw.html";
+        //     // socket.emit("call_friend", {"image":image,"cookie":document.cookie});
+        // }
     });
 
     app.controller("call_friend_controller", function($http, $scope){
         $scope.friends = [];
+        // $scope.image = '';
         socket.on("search_friend", function(msg){
             if(msg['result']){
                 $scope.friends = msg['friends'];
@@ -595,6 +602,17 @@ function load_angular(){
                 socket.emit("search_friend",{"cookie":document.cookie,"friend":newValue});
             }
         }, true);
+
+        // $scope.search_friend = function(image){
+        //     $scope.image = imtage;
+        // };
+
+        $scope.call_friend = function(){
+            // console.log("call friend image", tempimage);
+            socket.emit("call_friend", {"image":tempimage,"cookie":document.cookie});
+            window.location.href = "/web/draw.html";
+            
+        }
     });
 
     app.controller("empty_file_controller", function($http, $scope){
