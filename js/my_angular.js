@@ -565,6 +565,11 @@ function load_angular(){
                 }
             });
         }
+
+        $scope.call_friend = function(image){
+            window.location.href = "/web/draw.html";
+            socket.emit("call_friend", {"image":image,"cookie":document.cookie});
+        }
     });
 
     app.controller("empty_file_controller", function($http, $scope){

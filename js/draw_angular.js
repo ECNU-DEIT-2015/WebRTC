@@ -1,3 +1,4 @@
+
 console.log("draw angular");
 var app = angular.module('draw_app', []);
 app.directive('drawcanvas', function(){
@@ -13,6 +14,7 @@ app.controller("main_controller", function($http, $scope){
 
     var socket = io.connect();
 
+    $scope.image = "";
     $scope.xx = 1;
     $scope.ctx = undefined;
     $scope.canvas_imagedata = undefined;
@@ -21,7 +23,10 @@ app.controller("main_controller", function($http, $scope){
     $scope.socket = socket;
     // window.setTimeout(init_canvas($scope), 4000);
 
-    
+    socket.on("call_friend", function(msg){
+      $scope.image = msg['image'];
+    });
+
     $scope.remove = function(){
         if($scope.drawcanvas.length== 0){
             $scope.drawcanvas = [1];
@@ -67,6 +72,14 @@ app.controller("main_controller", function($http, $scope){
         $("video:last").get(0).style.width = "300px";
         $("video:last").get(0).style.height = "220px";
     }
+
+    $scope.icons = function(){
+        if($scope.show_icons == true){
+            $scope.show_icons = false;
+        }else{
+            $scope.show_icons = true;
+        }
+    }
     // console.log("mymain.js from main_controller");
     // var canvas = document.getElementsByTagName('canvas')[0];
     // canvas.id = "main_canvas";
@@ -96,8 +109,22 @@ function init_canvas(scope){
     var canvas = $("canvas:first").get(0);
     console.log("scope xx",scope.xx);   
     var img = document.createElement("img");
-    img.src = "http://localhost:8080/images/1.png";
-    window.setTimeout(function(){$("canvas:first").get(0).getContext('2d').drawImage(img,0,0);},1000);
+    // scope.socket.on("call_friend", function(msg){
+    //   console.log("call_friend----=====---");
+    //   img.src = msg['image'];
+    //   window.setTimeout(function(){$("canvas:first").get(0).getContext('2d').drawImage(img,0,0);},1000);
+    // });
+
+    // img.src = "http://localhost:8080/images/1.png";
+    // window.setTimeout(function(){$("canvas:first").get(0).getContext('2d').drawImage(img,0,0);},1000);
+
+    // img.src = scope.image;
+    // window.setTimeout(function(){$("canvas:first").get(0).getContext('2d').drawImage(img,0,0);},1000);
+    scope.socket.emit("call_friend_image",{"xx":"xx"});
+    scope.socket.on("call_friend_image", function(msg){
+      img.src = msg['image'];
+      window.setTimeout(function(){$("canvas:first").get(0).getContext('2d').drawImage(img,0,0);},1000);
+    });
     canvas.id = "main_canvas";
     scope.ctx = $("canvas:first").get(0).getContext('2d');
     scope.canvas_imagedata = scope.ctx.getImageData(0,0,990,500);

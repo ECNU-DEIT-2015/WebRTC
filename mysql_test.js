@@ -37,6 +37,10 @@ connection.connect();
 //         console.log(rows[i].toString());
 //     }
 // });
+var headline = row['headline'];
+            var introduction = row['introduction'];
+            var labels = row['labels'];
+            bin_file_id = row['personal_file_id'];
 
 var querysql = "insert into bin_file(bin_file_id,email,image,headline,introduction,labels) value(?,?,?,?,?,?)";
 connection.query(querysql,[bin_file_id,email,image,headline,introduction,labels], function(err, result){

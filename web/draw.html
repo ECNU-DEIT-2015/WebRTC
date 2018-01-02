@@ -43,7 +43,7 @@
 </head>
 <body ng-app="draw_app" ng-controller="main_controller">
     <div ng-include="'navigator.html'" id="navigator_div" ng-show="show_navigator" ng-init="show_navigator = true"></div> 
-    <div id="icons" class="" hidden="true">
+    <div id="icons" class="" ng-show="show_icons" ng-init="show_icons=false">
             <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="-10 -10 68 68">
             <title>title</title>
               <circle cx="24" cy="24" r="34">
@@ -94,7 +94,7 @@
                             <video id="localVideo" autoplay muted></video>
                         </div>
                         <div class="vid-wrappper">
-                            <video id="remoteVideo" autoplay ></video>
+                            <video id="remoteVideo" autoplay ng-click="icons()"></video>
                         </div>
                     </div>
                 </div>

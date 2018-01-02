@@ -47,6 +47,10 @@ app.get("/jj", function(req,res){
 
 var login_user = {};
 var connectCounter = 0;
+
+
+var tempimage = "";
+
 // numClients
 // io.sockets.on("connection", function(socket){
   io.on("connection", function(socket){
@@ -292,6 +296,16 @@ var connectCounter = 0;
         }
       });
       connection.end();
+    });
+
+    socket.on("call_friend", function(msg){
+      // socket.emit("call_friend", {"image":msg["image"]});
+      // console.log("call_friend----=====---====");
+      tempimage = msg['image'];
+    });
+
+    socket.on("call_friend_image", function(msg){
+      socket.emit("call_friend_image", {"image":tempimage});
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);
