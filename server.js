@@ -1,6 +1,4 @@
 
-
-
 'use strict';
 
 var os = require('os');
@@ -306,6 +304,30 @@ var tempimage = "";
 
     socket.on("call_friend_image", function(msg){
       socket.emit("call_friend_image", {"image":tempimage});
+    });
+
+    socket.on("search_friend", function(msg){
+
+      var connection = mysqlconnection();
+      var cookie = msg['cookie'].split(';')[0];
+      var user = login_user[cookie];
+      var friend = msg['friend'];
+      var querysql = "select * from user where email in (select friend_email from friend where email='"+user+"' and friend_email like '%"+friend+"%')";
+      connection.query(querysql, function(err, rows, fields){
+        if(err){
+          socket.emit("search_friend",{"result":false});
+        }else{
+          socket.emit("search_friend", {"result":true,"friends":rows});
+        }
+      });
+      connection.end();
+      // console.log("search_friend");
+      // var friends = [];
+      // var i0 =  parseInt(Math.random()*10);
+      // for(var i=0; i<i0; i++){
+      //   friends.push(i);
+      // }
+      // socket.emit("search_friend", {"result":true, "friends": friends});
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);

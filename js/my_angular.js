@@ -70,6 +70,14 @@ function load_angular(){
         }
     });
 
+    app.directive('callfriend', function(){
+        return {
+            templateUrl: 'call_friend.html',
+            replace: true,
+            restrict: 'AE',
+        }
+    });
+
     app.controller('new_file_controller', function($scope, $http){
         $scope.add_image_ = false;
         $scope.image_url_ = '';
@@ -567,9 +575,26 @@ function load_angular(){
         }
 
         $scope.call_friend = function(image){
-            window.location.href = "/web/draw.html";
-            socket.emit("call_friend", {"image":image,"cookie":document.cookie});
+            // window.location.href = "/web/draw.html";
+            // socket.emit("call_friend", {"image":image,"cookie":document.cookie});
         }
+    });
+
+    app.controller("call_friend_controller", function($http, $scope){
+        $scope.friends = [];
+        socket.on("search_friend", function(msg){
+            if(msg['result']){
+                $scope.friends = msg['friends'];
+                $scope.$apply();
+            }
+        });
+        $scope.$watch('friend', function(newValue, oldValue) {
+            if (newValue === oldValue) {
+                return;
+            }else{
+                socket.emit("search_friend",{"cookie":document.cookie,"friend":newValue});
+            }
+        }, true);
     });
 
     app.controller("empty_file_controller", function($http, $scope){
