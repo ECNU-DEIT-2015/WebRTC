@@ -49,7 +49,7 @@ var connectCounter = 0;
 
 var tempimage = "";
 var messages = {};
-
+var connection_pair = {};
 
 // numClients
 // io.sockets.on("connection", function(socket){
@@ -301,7 +301,11 @@ var messages = {};
     socket.on("call_friend", function(msg){
       // socket.emit("call_friend", {"image":msg["image"]});
       // console.log("call_friend----=====---====");
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
       tempimage = msg['image'];
+      connection_pair[msg['email']] = email;
+      connection_pair[email] = msg['email'];
     });
 
     socket.on("call_friend_image", function(msg){
@@ -336,7 +340,7 @@ var messages = {};
       var cookie = msg['cookie'].split(';')[0];
       var user = login_user[cookie];
       if(messages[user]){
-        socket.emit("messages",{"result":true,'messages':[{'friend':messages[user]}]});
+        socket.emit("messages",{"result":true,'messages':messages[user]});
       }else{
         socket.emit("messages",{'result':false});
       }
@@ -347,8 +351,73 @@ var messages = {};
       var cookie = msg['cookie'].split(';')[0];
       var user = login_user[cookie];
       var  email = msg['email'];
+      var image = msg['image'];
       // messages[email] = {'friend':user};
-      messages[email] = user;
+      messages[email] = [{'friend':user,'image':image}];
+    });
+
+    socket.on("save_cooperation_file", function(msg){
+      var cookie = msg['cookie'].split(';')[0];
+      var user = login_user[cookie];
+
+      var connection = mysqlconnection();
+      var querysql1 = "insert into cooperation_file(cooperation_file_id,email,friend_email,image,headline,introduction,labels) value(?,?,?,?,?,?,?)";
+      // connection.query(querysql,[msg['email']+msg['friend_email']+Math.random().toString(),msg['email'],msg['friend_email'],msg['image'],msg['headline'],msg['introduction'],msg['labels']], function(err,result){
+      //   if(err){
+      //     socket.emit("save_cooperation_file",{'result':false});
+      //   }else{
+      //     socket.emit("save_cooperation_file",{"result":true});
+      //   }
+      // });
+
+      var imgData = msg['imgData'];
+      var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+      var dataBuffer = new Buffer(base64Data, 'base64');
+      
+      var cookie = msg['cookie'].split(';')[0];
+      var email = login_user[cookie];
+      var friend_email = connection_pair[email];
+      console.log("connection_pair",connection_pair);
+      var querysql = "select count(*) from cooperation_file where email='"+email+"'";
+      var connection = mysqlconnection();
+      
+      console.log("insert to cooperation file");
+      connection.query(querysql, function(err, rows, fields) {
+        if(err){
+          console.log("insert to cooperation file failed in select from cooperation_file");
+        }else{
+          var count = rows[0]['count(*)'];
+          var imagepath = "images/"+email+"/cooperation_file/"+(count+1).toString()+".png";
+          var headline = msg['headline'];
+          var introduction = msg['introduction'];
+          var labels = msg['labels'];
+          console.log("cooperation_file_id",email+(count+1).toString());
+          console.log("email",email);
+          console.log("friend_email", friend_email);
+          console.log("image",imagepath);
+          console.log("introduction",introduction);
+          console.log("labels",labels);
+          console.log("headline",headline);
+          connection.query(querysql1,[email+(count+1).toString(), email,friend_email, "../"+imagepath, headline, introduction, labels], function(err, result){
+            if(err){
+              console.log("insert cooperation file to database failed");
+              socket.emit("save_cooperation_file",{"result":false});
+            }else{
+              fs.writeFile(imagepath, dataBuffer, function(err) {
+                if(err){
+                  console.log("insert into cooperation failed");
+                  socket.emit("save_cooperation_file",{"result":false});
+                }else{
+                  console.log("insert into cooperation file successu");
+                  socket.emit("save_cooperation_file",{"result":true});
+                  console.log("save successfully");
+                }
+              });
+            }
+          });
+        }
+      });
+      // connection.end();
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);

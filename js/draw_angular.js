@@ -1,5 +1,6 @@
 
 console.log("draw angular");
+var socket = io.connect();
 var app = angular.module('draw_app', []);
 app.directive('drawcanvas', function(){
     return {
@@ -12,14 +13,15 @@ app.directive('drawcanvas', function(){
 
 app.controller("main_controller", function($http, $scope){
 
-    var socket = io.connect();
-
+    $scope.drawhtml = true;
     $scope.image = "";
     $scope.xx = 1;
     $scope.ctx = undefined;
     $scope.canvas_imagedata = undefined;
     $scope.array_data  = undefined;
-    window.setTimeout(add_canvas,500);
+    window.setTimeout(add_canvas,100);
+    
+    // window.setTimeout(init($scope),200);
     $scope.socket = socket;
     // window.setTimeout(init_canvas($scope), 4000);
 
@@ -35,7 +37,7 @@ app.controller("main_controller", function($http, $scope){
         }
         
     };
-
+    window.setTimeout(function(){init_canvas($scope);init_video($scope)},1000);
     $scope.test = function(){
         // var canvas = $("canvas:first").get(0);
         // console.log(canvas.getContext("2d"));
@@ -80,6 +82,20 @@ app.controller("main_controller", function($http, $scope){
             $scope.show_icons = true;
         }
     }
+
+    $scope.save_empty_file = function(){
+      console.log("save empty file",$scope.introduction);
+            var canvas = $("canvas:first").get(0);
+            // console.log(canvas.toDataURL());
+            socket.emit('save_cooperation_file',{"introduction":$scope.introduction,"headline":$scope.headline,"cookie":document.cookie,"imgData":canvas.toDataURL(),"labels":$scope.labels});
+            // console.log("introduction",$scope.introduction);
+            // console.log("headline",$scope.headline);
+            // console.log("labels",$scope.labels);
+            socket.on("save_cooperation_file", function(msg){
+                if(msg['result'] == true){ alert("新文件保存成功")}
+            });
+    }
+    // $scope.recover = function()
     // console.log("mymain.js from main_controller");
     // var canvas = document.getElementsByTagName('canvas')[0];
     // canvas.id = "main_canvas";
@@ -90,17 +106,28 @@ app.controller("main_controller", function($http, $scope){
 
 
 app.controller('navigator_controller', function($http, $scope) {
-    $scope.data_list = []
-    $scope.$watch('search_value', function(newValue, oldValue) {
-        if (newValue === oldValue) {
-            return;
-        }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
-            $scope.data_list.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"});
-        }else{
-            $scope.data_list.pop()
-        }
-        console.log("data changed");
-    }, true);
+  $scope.messages = false;
+  $scope.m1 = "../img/message.png";
+  $scope.m2 = "../img/message1.png";
+  socket.emit("messages", {"cookie":document.cookie});
+  socket.on("messages", function(msg){
+      if(msg['result']){
+          $scope.messages = msg['messages'];
+      }
+      console.log("messages", )
+  });
+
+  $scope.data_list = []
+  $scope.$watch('search_value', function(newValue, oldValue) {
+      if (newValue === oldValue) {
+          return;
+      }else if((newValue.length==1 && oldValue==undefined) || (newValue.length > oldValue.length)){
+          $scope.data_list.push({"h":"老年","p":"架飞机阿咖酚散放辣椒发了卡机发","img":"../images/1.png"});
+      }else{
+          $scope.data_list.pop()
+      }
+      console.log("data changed");
+  }, true);
 });
 
 
@@ -510,4 +537,11 @@ function init_video(scope){
       sdpLines[mLineIndex] = mLineElements.join(' ');
       return sdpLines;
     }
+}
+
+
+function init(scope){
+  add_canvas();
+  init_canvas(scope);
+  init_video(socket);
 }

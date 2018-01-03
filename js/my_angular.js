@@ -166,6 +166,7 @@ function load_angular(){
     });
 
     app.controller('navigator_controller', function($scope, $http) {
+
         $scope.messages = false;
         $scope.m1 = "../img/message.png";
         $scope.m2 = "../img/message1.png";
@@ -620,8 +621,8 @@ function load_angular(){
 
         $scope.call_friend = function(email){
             // console.log("call friend image", tempimage);
-            socket.emit("call_friend", {"image":tempimage,"cookie":document.cookie});
-            socket.emit("send_message",{'email':email,"cookie":document.cookie});
+            socket.emit("call_friend", {"image":tempimage,"cookie":document.cookie,"email":email});
+            socket.emit("send_message",{'email':email,"cookie":document.cookie,"image":tempimage});
             window.location.href = "/web/draw.html";
             
         }
