@@ -166,6 +166,14 @@ function load_angular(){
     });
 
     app.controller('navigator_controller', function($scope, $http) {
+        $scope.message = false;
+        $scope.m1 = "../img/message.png";
+        $scope.m2 = "../img/message1.png";
+        socket.emit("message", {"cookie":document.cookie});
+        socket.on("message", function(msg){
+            $scope.message = msg['message'];
+        });
+
         $scope.data_list = []
         $scope.$watch('search_value', function(newValue, oldValue) {
             if (newValue === oldValue) {

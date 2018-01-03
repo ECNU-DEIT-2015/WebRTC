@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" ng-model="search_value" id="wuqingze"  placeholder="fdkjf"/>
+                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" ng-model="search_value" id="wuqingze"  placeholder="好友或文件"/>
                 <ul class="dropdown-menu" ng-hide="data_list.length==0">
                     <li ng-repeat="x in data_list">
                         <div class="col-sm-6">
@@ -25,7 +25,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src="../img/test.png" class="img-rounded dropdown-toggle" />
+                <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src={{message?m2:m1}} class="img-rounded dropdown-toggle" />
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">Action</a>

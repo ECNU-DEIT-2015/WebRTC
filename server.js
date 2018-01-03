@@ -48,6 +48,8 @@ var connectCounter = 0;
 
 
 var tempimage = "";
+var message = {};
+
 
 // numClients
 // io.sockets.on("connection", function(socket){
@@ -328,6 +330,14 @@ var tempimage = "";
       //   friends.push(i);
       // }
       // socket.emit("search_friend", {"result":true, "friends": friends});
+    });
+
+    socket.on("message", function(msg){
+      var cookie = msg['cookie'].split(';')[0];
+      var user = login_user[cookie];
+
+      socket.emit("message",{"result":true,'message':message[user]});
+      console.log("message");
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);
