@@ -166,12 +166,15 @@ function load_angular(){
     });
 
     app.controller('navigator_controller', function($scope, $http) {
-        $scope.message = false;
+        $scope.messages = false;
         $scope.m1 = "../img/message.png";
         $scope.m2 = "../img/message1.png";
-        socket.emit("message", {"cookie":document.cookie});
-        socket.on("message", function(msg){
-            $scope.message = msg['message'];
+        socket.emit("messages", {"cookie":document.cookie});
+        socket.on("messages", function(msg){
+            if(msg['result']){
+                $scope.messages = msg['messages'];
+            }
+            console.log("messages", )
         });
 
         $scope.data_list = []
@@ -615,9 +618,10 @@ function load_angular(){
         //     $scope.image = imtage;
         // };
 
-        $scope.call_friend = function(){
+        $scope.call_friend = function(email){
             // console.log("call friend image", tempimage);
             socket.emit("call_friend", {"image":tempimage,"cookie":document.cookie});
+            socket.emit("send_message",{'email':email,"cookie":document.cookie});
             window.location.href = "/web/draw.html";
             
         }

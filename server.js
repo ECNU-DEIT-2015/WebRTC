@@ -48,7 +48,7 @@ var connectCounter = 0;
 
 
 var tempimage = "";
-var message = {};
+var messages = {};
 
 
 // numClients
@@ -332,12 +332,23 @@ var message = {};
       // socket.emit("search_friend", {"result":true, "friends": friends});
     });
 
-    socket.on("message", function(msg){
+    socket.on("messages", function(msg){
       var cookie = msg['cookie'].split(';')[0];
       var user = login_user[cookie];
-
-      socket.emit("message",{"result":true,'message':message[user]});
+      if(messages[user]){
+        socket.emit("messages",{"result":true,'messages':[{'friend':messages[user]}]});
+      }else{
+        socket.emit("messages",{'result':false});
+      }
       console.log("message");
+    });
+
+    socket.on("send_message", function(msg){
+      var cookie = msg['cookie'].split(';')[0];
+      var user = login_user[cookie];
+      var  email = msg['email'];
+      // messages[email] = {'friend':user};
+      messages[email] = user;
     });
     // socket.on("test_cookie", function(msg){
     //   console.log(msg);

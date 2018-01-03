@@ -25,21 +25,10 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src={{message?m2:m1}} class="img-rounded dropdown-toggle" />
+                <img data-toggle="dropdown" style="width:60px;height:40px;margin:5px 5px 0px 0px" src={{messages?m2:m1}} class="img-rounded dropdown-toggle" />
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">Action</a>
-                    </li>
-                    <li>
-                            <a href="#">Another action</a>
-                    </li>
-                    <li>
-                            <a href="#">Something else here</a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li>
-                            <a href="#">Separated link</a>
+                    <li ng-repeat="message in messages">
+                        <a href="#">{{message['friend']}}</a>
                     </li>
                 </ul>
             </li>
