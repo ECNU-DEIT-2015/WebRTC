@@ -1,2 +1,2 @@
 ﻿# WebRTC
->1)运行本项目需要nodejs环境和npm<br><br>2)在安装好nodejs和npm后，可以在WebRTC命令行目录下输入node server.js。这时候因为没有安装依赖包，可以自行根据报错信息使用npm安装依赖包<br><br>3)在浏览器地址栏输入localhost:8080/web/login.html可以访问网站登录页，登录页会有视频演示介绍如何使用本网站<br><br>本项目提供两个测试账号nongxiaoang@foxmail.com 密码:rootroot 和nongxiaolang1@foxmail.com 密码:rootroot
+>1)运行本项目需要nodejs环境和npm<br><br>2)在安装好nodejs和npm后，可以在WebRTC命令行目录下输入node server.js。这时候因为没有安装依赖包，可以自行根据报错信息使用npm安装依赖包<br><br>3)在浏览器地址栏输入localhost:8080/web/login.html可以访问网站登录页，登录页会有视频演示介绍如何使用本网站<br><br>4)本项目提供两个测试账号nongxiaoang@foxmail.com 密码:rootroot 和nongxiaolang1@foxmail.com 密码:rootroot<br><br>5)本项目依赖的包属于google域名下的库，成功运行需要vpn。同时本项目中的视频介绍嵌入YouTube的视频，同样需要VPN。
