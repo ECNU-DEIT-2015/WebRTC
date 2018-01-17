@@ -69,7 +69,7 @@ var connection_pair = {};
       // var querysql = "select password from user where email='"+msg['email']+"';";
       var querysql = "select * from user where email='"+msg['email']+"' and password='"+msg['password']+"'";
       connection.query(querysql,function(err, rows, fields) {    
-        console.log("rows length", rows.length);
+        // console.log("rows length", rows.length);
         if(rows.length == 1){
           var cookie = Math.random().toString();
           login_user[cookie.toString()] = msg['email'];

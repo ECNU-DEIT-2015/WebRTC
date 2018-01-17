@@ -165,7 +165,7 @@ function init_canvas(scope){
             var lasted_array = $("#main_canvas").get(0).getContext("2d").getImageData(0,0,990,500).data;
             // var lasted_array = document.getElementById("main_canvas").getContext("2d").getImageData(0,0,990,500).data;
             myWorker.postMessage([scope.array_data, lasted_array]);
-        },10000);
+        },100);
 
 
         myWorker.onmessage = function(e){
